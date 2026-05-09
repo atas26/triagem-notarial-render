@@ -1,151 +1,2049 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Triagem Notarial | Portal Notarial</title>
-  <meta name="description" content="Gerador de checklist para organizar documentos, informações, pontos de atenção, alertas de conformidade e normas aplicáveis antes do envio do ato ao tabelionato de notas." />
+  <meta name="description" content="Triagem Notarial: gerador orientativo de checklist para atos notariais, voltado à rotina de cartórios de notas, advocacia e imobiliárias." />
   <meta name="robots" content="index, follow" />
   <meta name="google-adsense-account" content="ca-pub-1578115877344777" />
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1578115877344777"
+     crossorigin="anonymous"></script>
+  <title>Triagem Notarial | Portal Notarial</title>
+  <style>
+    :root {
+      --vermelho: #e83946;
+      --teal: #00909d;
+      --azul: #0b5fff;
+      --texto: #1f2937;
+      --muted: #5f6b7a;
+      --linha: #e5e7eb;
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --ok: #0f766e;
+      --alerta: #92400e;
+      --erro: #b91c1c;
+      --divergencia: #7c3aed;
+      --sombra: 0 18px 50px rgba(15, 23, 42, 0.08);
+      --radius: 18px;
+    }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    * { box-sizing: border-box; }
 
-  <link rel="stylesheet" href="/style.css" />
+    html { scroll-behavior: smooth; }
 
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1578115877344777" crossorigin="anonymous"></script>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--texto);
+      line-height: 1.5;
+    }
+
+    a { color: inherit; }
+
+    .topbar {
+      background: #ffffff;
+      border-bottom: 1px solid var(--linha);
+    }
+
+    .topbar-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 14px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .topbar-links {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .topbar-links a {
+      text-decoration: none;
+      color: var(--muted);
+    }
+
+    .topbar-links a:hover { color: var(--teal); }
+
+    .hero {
+      background: linear-gradient(135deg, rgba(0,144,157,0.10), rgba(232,57,70,0.08));
+      border-bottom: 1px solid var(--linha);
+    }
+
+    .hero-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 42px 22px 34px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid var(--linha);
+      color: var(--teal);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.02;
+      letter-spacing: -0.045em;
+    }
+
+    .hero p {
+      max-width: none;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .hero p + p {
+      margin-top: 6px;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 26px 22px 44px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 420px minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--linha);
+      border-radius: var(--radius);
+      box-shadow: var(--sombra);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 22px 22px 0;
+    }
+
+    .card-header h2 {
+      margin: 0;
+      font-size: 21px;
+      letter-spacing: -0.02em;
+    }
+
+    .card-header p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .form {
+      padding: 20px 22px 22px;
+      display: grid;
+      gap: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+
+    select,
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      background: #ffffff;
+      color: var(--texto);
+      font-size: 15px;
+      padding: 12px 12px;
+      outline: none;
+      transition: border-color .18s ease, box-shadow .18s ease;
+    }
+
+    select:focus,
+    input:focus,
+    textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 4px rgba(0,144,157,0.12);
+    }
+
+    textarea {
+      min-height: 88px;
+      resize: vertical;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    textarea::placeholder {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .hint {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .checks {
+      display: grid;
+      gap: 9px;
+      padding: 12px;
+      border: 1px solid var(--linha);
+      border-radius: 14px;
+      background: #fafafa;
+    }
+
+    .checks-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #374151;
+      margin-bottom: 2px;
+    }
+
+    .checkline {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      color: #374151;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .checkline input {
+      width: 16px;
+      height: 16px;
+      margin: 2px 0 0;
+      accent-color: var(--teal);
+      flex: 0 0 auto;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 13px 14px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+    }
+
+    button:hover { transform: translateY(-1px); }
+    button:active { transform: translateY(0); }
+
+    .btn-primary {
+      background: var(--teal);
+      color: #ffffff;
+      grid-column: 1 / -1;
+      box-shadow: 0 12px 24px rgba(0,144,157,0.18);
+    }
+
+    .btn-secondary {
+      background: #eef2f7;
+      color: #1f2937;
+    }
+
+    .btn-danger {
+      background: #fff1f2;
+      color: var(--erro);
+    }
+
+    .result-empty {
+      padding: 38px 24px;
+      min-height: 380px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    .result {
+      display: none;
+      padding: 22px;
+    }
+
+    .result.active { display: block; }
+
+    .result-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: flex-start;
+      border-bottom: 1px solid var(--linha);
+      padding-bottom: 18px;
+      margin-bottom: 18px;
+    }
+
+    .result-title h2 {
+      margin: 0;
+      font-size: 25px;
+      letter-spacing: -0.03em;
+    }
+
+    .result-title p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .tag {
+      display: inline-flex;
+      white-space: nowrap;
+      padding: 8px 11px;
+      border-radius: 999px;
+      background: rgba(0,144,157,0.11);
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .section {
+      border: 1px solid var(--linha);
+      border-radius: 16px;
+      padding: 16px 16px 14px;
+      margin-bottom: 14px;
+      background: #ffffff;
+    }
+
+    .section h3 {
+      margin: 0 0 10px;
+      font-size: 17px;
+      letter-spacing: -0.01em;
+    }
+
+    .section ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .section li { margin: 7px 0; }
+
+    .group-title {
+      margin: 14px 0 6px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #374151;
+    }
+
+    .group-title:first-of-type { margin-top: 0; }
+
+    .grouped-list {
+      margin-bottom: 10px !important;
+    }
+
+    .okbox .group-title { color: var(--ok); }
+    .spbox .group-title { color: var(--vermelho); }
+
+    .section p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .attention {
+      border-color: rgba(146,64,14,0.28);
+      background: #fffbeb;
+    }
+
+    .okbox {
+      border-color: rgba(15,118,110,0.22);
+      background: #ecfdf5;
+    }
+
+
+    .spbox {
+      border-color: rgba(232,57,70,0.40);
+      background: #fff6f7;
+    }
+
+    .spbox h3 {
+      color: var(--vermelho);
+    }
+
+    .spbox li {
+      color: var(--vermelho);
+      border-radius: 10px;
+      padding: 2px 4px;
+      transition: background .16s ease, color .16s ease;
+    }
+
+    .spbox li:hover {
+      background: rgba(232,57,70,0.10);
+    }
+
+
+    .spbox .group-title.divergencia-title { color: var(--divergencia); }
+
+    .spbox li.divergencia-item {
+      color: var(--divergencia);
+      border-left: 4px solid var(--divergencia);
+      background: rgba(124,58,237,0.07);
+      padding: 6px 8px;
+      list-style-position: inside;
+    }
+
+    .spbox li.divergencia-item:hover {
+      background: rgba(124,58,237,0.14);
+    }
+
+    .sp-legend {
+      border: 1px solid rgba(232,57,70,0.35);
+      border-radius: 14px;
+      background: #fff6f7;
+      color: var(--vermelho);
+      padding: 12px 14px;
+      font-size: 13px;
+      margin-top: 22px;
+    }
+
+    .copybox {
+      width: 100%;
+      min-height: 220px;
+      border: 1px solid #d1d5db;
+      background: #f9fafb;
+      color: #111827;
+      border-radius: 14px;
+      padding: 14px;
+      white-space: pre-wrap;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 14px;
+    }
+
+    .texto-envio-oculto {
+      display: none;
+    }
+
+    .footer {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 22px 38px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer-card {
+      border: 1px solid var(--linha);
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 16px 18px;
+    }
+
+    .footer a { color: var(--teal); text-decoration: none; }
+    .doc-link {
+      color: var(--teal);
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .doc-link:hover {
+      text-decoration: underline;
+    }
+
+    .footer a:hover { text-decoration: underline; }
+
+
+    .project-support {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .visit {
+      position: fixed;
+      right: 14px;
+      bottom: 12px;
+      z-index: 40;
+      opacity: .58;
+      transition: opacity .2s ease;
+      font-size: 11px;
+      color: var(--muted);
+      background: rgba(255,255,255,.90);
+      border: 1px solid var(--linha);
+      border-radius: 4px;
+      padding: 4px 7px;
+      line-height: 1;
+    }
+
+    .visit:hover { opacity: .9; }
+
+    .visit img {
+      display: block;
+      height: 18px;
+      width: auto;
+      max-width: 120px;
+    }
+
+    .toast {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      background: #111827;
+      color: #ffffff;
+      padding: 12px 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+      z-index: 10;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+
+    .pdf-source {
+      display: none;
+    }
+
+    @media (max-width: 920px) {
+      .grid { grid-template-columns: 1fr; }
+      .result-title { display: block; }
+      .tag { margin-top: 12px; }
+      .topbar-inner { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media print {
+      body { background: #ffffff; }
+      .topbar, .hero, .form-card, .footer, .actions, .toast, .visit { display: none !important; }
+      .wrap { padding: 0; }
+      .grid { display: block; }
+      .card { box-shadow: none; border: 0; }
+      .result { display: block !important; padding: 0; }
+      .pdf-source { display: block; margin: 0 0 14px; font-size: 13px; color: #111827; }
+      .pdf-source a { color: #111827; text-decoration: none; }
+      .copybox { border: 0; background: #ffffff; padding: 0; }
+    }
+  </style>
 </head>
-
 <body>
-  <main class="page">
-    <section class="hero">
-      <span class="eyebrow">Portal Notarial</span>
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="badge">Ferramenta orientativa</div>
       <h1>Triagem Notarial</h1>
+      <p>Gerador de checklist para organizar documentos, informações, pontos de atenção, alertas de conformidade e normas aplicáveis antes do envio do ato ao tabelionato de notas.</p>
+      <p>Ferramenta de apoio à rotina de cartórios de notas, advocacia e imobiliárias, destinada à preparação inicial da documentação e à identificação prévia de exigências que poderão ser conferidas pelo tabelionato competente.</p>
+      <div class="sp-legend">Observações em vermelho indicam exigências, cautelas ou diferenças operacionais relevantes das Normas de Serviço da Corregedoria Geral da Justiça de São Paulo em relação à base nacional.</div>
+    </div>
+  </section>
 
-      <p class="lead">
-        Gerador de checklist para organizar documentos, informações, pontos de atenção,
-        alertas de conformidade e normas aplicáveis antes do envio do ato ao tabelionato de notas.
-      </p>
+  <main class="wrap">
+    <div class="grid">
+      <section class="card form-card" aria-labelledby="titulo-formulario">
+        <div class="card-header">
+          <h2 id="titulo-formulario">Dados para triagem</h2>
+          <p>Preencha os campos abaixo para gerar um checklist inicial.</p>
+        </div>
 
-      <p class="lead small">
-        Ferramenta de apoio à rotina de cartórios de notas, advocacia e imobiliárias,
-        destinada à preparação inicial da documentação e à identificação prévia de exigências
-        que poderão ser conferidas pelo tabelionato competente.
-      </p>
-    </section>
+        <form class="form" id="triagemForm">
+          <div>
+            <label for="ato">Tipo de ato</label>
+            <select id="ato" required>
+              <option value="">Selecione</option>
+              <option value="compraVenda">Compra e venda de imóvel</option>
+              <option value="doacao">Doação</option>
+              <option value="inventario">Inventário extrajudicial</option>
+              <option value="uniaoEstavel">União estável</option>
+              <option value="sobrepartilha">Sobrepartilha</option>
+              <option value="divorcio">Divórcio e Extinção de União Estável</option>
+              <option value="pacto">Pacto antenupcial</option>
+              <option value="procuracao">Procuração pública</option>
+              <option value="ata">Ata notarial</option>
+              <option value="usucapiao">Ata para usucapião extrajudicial</option>
+              <option value="adjudicacao">Ata para adjudicação compulsória extrajudicial</option>
+              <option value="alienacaoFiduciaria">Alienação fiduciária em garantia</option>
+              <option value="distrato">Distrato, rescisão ou desfazimento</option>
+              <option value="dacaoPagamento">Dação em pagamento</option>
+              <option value="nomeacaoInventariante">Nomeação de inventariante</option>
+              <option value="confissaoDivida">Confissão de dívida</option>
+              <option value="testamento">Testamento ou revogação de testamento</option>
+            </select>
+          </div>
 
-    <section class="panel">
-      <h2>Dados para triagem</h2>
 
-      <label for="tipoAto">Tipo de ato</label>
-      <select id="tipoAto">
-  <option value="">Carregando tipos de ato...</option>
-</select>
-<div class="situacoes">
+          <div class="checks">
+            <div class="checks-title">Situações presentes no caso</div>
+            <label class="checkline"><input type="checkbox" id="temImovel" /> Envolve imóvel</label>
+            <label class="checkline"><input type="checkbox" id="imovelRural" /> Imóvel rural</label>
+            <label class="checkline"><input type="checkbox" id="dominioUniao" /> Domínio útil ou terreno da União</label>
+            <label class="checkline"><input type="checkbox" id="temPJ" /> Há pessoa jurídica</label>
+            <label class="checkline"><input type="checkbox" id="temProcuracao" /> Há procuração ou representante</label>
+            <label class="checkline"><input type="checkbox" id="temEstrangeiro" /> Há pessoa estrangeira ou documento estrangeiro</label>
+            <label class="checkline"><input type="checkbox" id="temFinanciamento" /> Há financiamento, saldo devedor ou garantia</label>
+            <label class="checkline"><input type="checkbox" id="temContaNotarial" /> Pretende usar conta notarial</label>
+            <label class="checkline"><input type="checkbox" id="temTributo" /> Exige análise de imposto, guia ou isenção</label>
+            <label class="checkline"><input type="checkbox" id="conteudoEconomico" /> Conformidade UIF (COAF)</label>
+            <div class="hint">Marque quando quiser incluir alertas de PLD/FTP sobre beneficiário final, forma de pagamento, origem econômica, pessoa exposta politicamente e operações atípicas.</div>
+            <label class="checkline"><input type="checkbox" id="atoEletronico" /> Ato eletrônico ou híbrido pelo e-Notariado</label>
+            <label class="checkline"><input type="checkbox" id="haMenorOuIncapaz" /> Há menor, incapaz ou dados de criança/adolescente</label>
+          </div>
 
-  <h3>Situações presentes no caso</h3>
+          <div>
+            <label for="observacoes">Observações úteis</label>
+            <textarea id="observacoes" placeholder="Tirar dúvida com o cliente/escrevente sobre..."></textarea>
+          </div>
 
-  <label class="check">
-    <input type="checkbox" name="situacoes" value="imovel" />
-    Envolve imóvel
-  </label>
+          <div class="actions">
+            <button type="submit" class="btn-primary">Gerar checklist</button>
+            <button type="button" class="btn-secondary" id="pdfBtn">Gerar PDF</button>
+            <button type="button" class="btn-danger" id="limparBtn">Limpar</button>
+          </div>
+        </form>
+      </section>
 
-  <label class="check">
-    <input type="checkbox" name="situacoes" value="imovel-rural" />
-    Imóvel rural
-  </label>
+      <section class="card" id="resultadoCard" aria-live="polite">
+        <div class="result-empty" id="emptyState">
+          <div>
+            <h2>Checklist ainda não gerado</h2>
+            <p>Selecione o tipo de ato e gere a triagem inicial.</p>
+          </div>
+        </div>
 
-  <label class="check">
-    <input type="checkbox" name="situacoes" value="dominio-uniao" />
-    Domínio útil ou terreno da União
-  </label>
+        <div class="result" id="resultado">
+          <div class="result-title">
+            <div>
+              <h2 id="resultadoTitulo">Triagem Notarial</h2>
+              <p id="resultadoSubtitulo">Checklist orientativo para organização inicial do ato.</p>
+            </div>
+          </div>
 
-  <label class="check">
-    <input type="checkbox" name="situacoes" value="pessoa-juridica" />
-    Pessoa jurídica
-  </label>
+          <div class="pdf-source">Portal Notarial: <a href="https://portalnotarial.com.br/">https://portalnotarial.com.br/</a></div>
 
-  <label class="check">
-    <input type="checkbox" name="situacoes" value="procuracao" />
-    Procuração
-  </label>
+          <div id="resultadoSecoes"></div>
 
-  <label class="check">
-    <input type="checkbox" name="situacoes" value="estrangeiro" />
-    Pessoa estrangeira
-  </label>
-
-  <label class="check">
-    <input type="checkbox" name="situacoes" value="financiamento" />
-    Financiamento
-  </label>
-
-  <label class="check">
-    <input type="checkbox" name="situacoes" value="conta-notarial" />
-    Conta notarial vinculada
-  </label>
-
-  <label class="check">
-    <input type="checkbox" name="situacoes" value="tributo-isencao" />
-    Tributo ou isenção
-  </label>
-
-  <label class="check">
-    <input type="checkbox" name="situacoes" value="uif-coaf" />
-    Conformidade UIF (COAF)
-  </label>
-
-  <p class="hint">
-    Marque quando quiser incluir alertas de PLD/FTP sobre beneficiário final, forma de pagamento, origem econômica, pessoa exposta politicamente e operações atípicas.
-  </p>
-
-  <label class="check">
-    <input type="checkbox" name="situacoes" value="eletronico-hibrido" />
-    Ato eletrônico ou híbrido
-  </label>
-</div>
-      
-<div class="actions">
-  <button id="btnTestar" type="button">Gerar checklist</button>
-  <button id="btnPdf" class="btn-secondary" type="button">Gerar PDF</button>
-</div>
-        
-      <div id="resultado" class="resultado">
-        Selecione o tipo de ato e gere a triagem inicial.
-      </div>
-    </section>
-
-    <footer class="footer">
-  <p>
-    Aviso: ferramenta orientativa destinada ao uso geral. A lista gerada não substitui
-    a qualificação notarial, a exigência de documentos complementares pelo tabelionato
-    competente, a conferência dos documentos originais, a legislação local aplicável,
-    a tabela de emolumentos ou a orientação jurídica do caso concreto.
-  </p>
-
-  <p class="footer-links">
-    Portal Notarial:
-    <a href="https://portalnotarial.com.br/" target="_blank" rel="noopener noreferrer">
-      https://portalnotarial.com.br/
-    </a>
-  </p>
-
-  <p class="footer-links">
-    Projeto apoiado por Escritura Pública -
-    <a href="https://escriturapublica.substack.com" target="_blank" rel="noopener noreferrer">
-      https://escriturapublica.substack.com
-    </a>
-    |
-    Atesta -
-    <a href="https://www.atesta.com.br" target="_blank" rel="noopener noreferrer">
-      https://www.atesta.com.br
-    </a>
-  </p>
-</footer>
+          <div class="texto-envio-oculto" aria-hidden="true">
+            <div id="textoCopiavel"></div>
+          </div>
+        </div>
+      </section>
+    </div>
   </main>
 
-  <script src="/app.js"></script>
+  <footer class="footer">
+    <div class="footer-card">
+      <p><strong>Aviso:</strong> ferramenta orientativa destinada ao uso geral. A lista gerada não substitui a qualificação notarial, a exigência de documentos complementares pelo tabelionato competente, a conferência dos documentos originais, a legislação local aplicável, a tabela de emolumentos ou a orientação jurídica do caso concreto.</p>
+      <p>Fontes normativas de referência: Lei nº 8.935/1994, Código Civil, Código de Processo Civil, Lei nº 6.015/1973, Lei nº 9.514/1997, Resolução CNJ nº 35/2007, com alterações da Resolução CNJ nº 571/2024, Provimento CNJ nº 149/2023, Provimento CNJ nº 197/2025 e Normas de Serviço da Corregedoria Geral da Justiça de São Paulo, Tomo II.</p>
+    </div>
+    <p class="project-support">Projeto apoiado por Escritura Pública - <a href="https://escriturapublica.substack.com" rel="noopener noreferrer" target="_blank">https://escriturapublica.substack.com</a> | Atesta - <a href="https://www.atesta.com.br" rel="noopener noreferrer" target="_blank">https://www.atesta.com.br</a></p>
+  </footer>
+
+  <span aria-label="Contador global de visitas da página" class="visit" title="Visitas: 0">
+    <img alt="Visitas: 0" id="visitCounter" loading="lazy" referrerpolicy="no-referrer-when-downgrade"/>
+  </span>
+
+  <div class="toast" id="toast">Texto copiado.</div>
+
+  <script>
+    const dadosAtos = {
+      compraVenda: {
+        nome: 'Compra e venda de imóvel',
+        resumo: 'Checklist inicial para escritura de transmissão onerosa de imóvel.',
+        documentos: [
+          'Pessoa física: documento de identidade oficial ou documento equivalente e CPF.',
+          'Estado civil: solteiro > certidão de nascimento, quando necessária à comprovação; casado > certidão de casamento; separado ou divorciado > certidão de casamento com averbação da separação ou do divórcio; viúvo > certidão de casamento e certidão de óbito do cônjuge falecido.',
+          'Regime de bens: certidão de casamento com indicação do regime; pacto antenupcial e certidão ou informação do registro do pacto no Registro de Imóveis, se houver.',
+          'Cônjuge, convivente, representante, interveniente ou anuente: documento de identidade oficial, CPF e qualificação completa, quando comparecer ou quando o ato exigir anuência.',
+          'Representação: instrumento de procuração pública ou substabelecimento, com poderes especiais quando exigidos; se a procuração for usada para o ato, apresentar certidão expedida nos 90 dias anteriores, quando aplicável.',
+          'Preço e forma de pagamento: declaração das partes e, se houver, comprovantes de transferência, recibos, cheques identificados por número e banco sacado, contrato preliminar, sinal, arras, saldo, quitação e entrega da posse.',
+          'Conta notarial vinculada: instrumento ou cláusula com valor, beneficiário, condição objetiva de liberação, prazo e vínculo com o negócio jurídico, se for utilizada.'
+        ],
+        imovel: [
+          'Certidão atualizada da matrícula ou transcrição do Registro de Imóveis competente.',
+          'Certidão de ações reais e pessoais reipersecutórias e certidão de ônus reais, com prazo de validade de 30 dias.',
+          'Título de aquisição do alienante ou titular, com natureza do negócio, instrumento, matrícula, registro anterior e Registro de Imóveis.',
+          'Certidões dos distribuidores do foro das Justiças Estadual, Federal e Trabalhista, ou dispensa expressa pelo adquirente e declaração do alienante sobre inexistência de ônus reais, judiciais ou extrajudiciais.',
+          'Prova de quitação dos tributos municipais, ou dispensa expressa do adquirente com declaração de responsabilidade pelos débitos fiscais existentes.',
+          'Imóvel urbano: carnê de IPTU, certidão de dados cadastrais ou documento municipal com o número de contribuinte, logradouro, número, bairro, cidade e Estado.',
+          'Guia do ITBI, documento de recolhimento do imposto de transmissão, ou documento que comprove imunidade, isenção, não incidência ou hipótese legal de pagamento posterior à lavratura.',
+          'Certidões do INSS, Receita Federal e órgãos públicos, quando exigidas por lei; se houver dispensa legal ou não sujeição, declaração correspondente sob as penas da lei.',
+          'Pacto antenupcial que alcance o imóvel: certidão ou informação do registro no Registro de Imóveis; se não registrado, menção à necessidade de registro antes da alienação ou oneração.',
+          'Construção, aumento de área, demolição, alteração de cadastro, número predial ou nome de rua: documentos comprobatórios exigíveis para eventual averbação no Registro de Imóveis.',
+          'Imóvel rural: CCIR emitido pelo INCRA, número cadastral rural indicado na norma, prova de quitação do ITR dos últimos cinco anos e autorização do INCRA para desmembramento quando exigível.'
+        ],
+        tributos: [
+          'Verificar incidência, recolhimento ou hipótese de isenção do ITBI.',
+          'Confirmar valor declarado, valor venal, valor de referência municipal e base usada para cálculo, conforme regra local.',
+          'Guardar comprovantes de pagamento ou documentos de reconhecimento de isenção, quando existentes.'
+        ],
+        atencao: [
+          'Conferir disponibilidade do imóvel, legitimidade do vendedor e poderes de eventual procurador.',
+          'Verificar comunicação patrimonial conforme estado civil e regime de bens.',
+          'Checar se há necessidade de anuência de cônjuge, credor fiduciário, condômino, usufrutuário ou outro interessado.'
+        ]
+      },
+      doacao: {
+        nome: 'Doação',
+        resumo: 'Checklist inicial para doação de bens móveis, imóveis, quotas, direitos ou valores.',
+        documentos: [
+          'Pessoa física: documento de identidade oficial ou documento equivalente e CPF.',
+          'Estado civil: solteiro > certidão de nascimento, quando necessária à comprovação; casado > certidão de casamento; separado ou divorciado > certidão de casamento com averbação da separação ou do divórcio; viúvo > certidão de casamento e certidão de óbito do cônjuge falecido.',
+          'Regime de bens: certidão de casamento com indicação do regime; pacto antenupcial e certidão ou informação do registro do pacto no Registro de Imóveis, se houver.',
+          'Cônjuge, convivente, representante, interveniente ou anuente: documento de identidade oficial, CPF e qualificação completa, quando comparecer ou quando o ato exigir anuência.',
+          'Representação: instrumento de procuração pública ou substabelecimento, com poderes especiais quando exigidos; se a procuração for usada para o ato, apresentar certidão expedida nos 90 dias anteriores, quando aplicável.',
+          'Doador e donatário: documento de identidade oficial, CPF e qualificação completa.',
+          'Grau de parentesco entre doador e donatário, quando existente.',
+          'Bem doado: documento de titularidade, descrição, valor atribuído e, se houver, reserva de usufruto.',
+          'Cláusulas restritivas: minuta ou declaração expressa sobre incomunicabilidade, impenhorabilidade, inalienabilidade, reversão, dispensa de colação ou adiantamento de legítima.',
+          'Donatário incapaz: documento de representação ou assistência e identificação do representante ou assistente, ressalvada aceitação futura quando admitida.'
+        ],
+        imovel: [
+          'Certidão atualizada da matrícula ou transcrição do Registro de Imóveis competente.',
+          'Certidão de ações reais e pessoais reipersecutórias e certidão de ônus reais, com prazo de validade de 30 dias.',
+          'Título de aquisição do alienante ou titular, com natureza do negócio, instrumento, matrícula, registro anterior e Registro de Imóveis.',
+          'Certidões dos distribuidores do foro das Justiças Estadual, Federal e Trabalhista, ou dispensa expressa pelo adquirente e declaração do alienante sobre inexistência de ônus reais, judiciais ou extrajudiciais.',
+          'Prova de quitação dos tributos municipais, ou dispensa expressa do adquirente com declaração de responsabilidade pelos débitos fiscais existentes.',
+          'Imóvel urbano: carnê de IPTU, certidão de dados cadastrais ou documento municipal com o número de contribuinte, logradouro, número, bairro, cidade e Estado.',
+          'Guia do ITBI, documento de recolhimento do imposto de transmissão, ou documento que comprove imunidade, isenção, não incidência ou hipótese legal de pagamento posterior à lavratura.',
+          'Certidões do INSS, Receita Federal e órgãos públicos, quando exigidas por lei; se houver dispensa legal ou não sujeição, declaração correspondente sob as penas da lei.',
+          'Pacto antenupcial que alcance o imóvel: certidão ou informação do registro no Registro de Imóveis; se não registrado, menção à necessidade de registro antes da alienação ou oneração.',
+          'Construção, aumento de área, demolição, alteração de cadastro, número predial ou nome de rua: documentos comprobatórios exigíveis para eventual averbação no Registro de Imóveis.',
+          'Imóvel rural: CCIR emitido pelo INCRA, número cadastral rural indicado na norma, prova de quitação do ITR dos últimos cinco anos e autorização do INCRA para desmembramento quando exigível.'
+        ],
+        tributos: [
+          'Verificar incidência, recolhimento ou hipótese de isenção do ITCMD.',
+          'Conferir base de cálculo, valor declarado e documentos fiscais exigidos pela Fazenda competente.'
+        ],
+        atencao: [
+          'Avaliar necessidade de anuência conjugal.',
+          'Verificar legítima, adiantamento de herança, dispensa de colação e eventual excesso disponível.',
+          'Conferir se o doador mantém patrimônio suficiente, quando o caso exigir cautela.'
+        ]
+      },
+      inventario: {
+        nome: 'Inventário extrajudicial',
+        resumo: 'Checklist inicial para inventário e partilha por escritura pública.',
+        documentos: [
+          'Autor da herança: certidão de óbito; documento de identidade oficial e CPF; qualificação completa; regime de bens; pacto antenupcial e registro imobiliário, se houver; dia e lugar do falecimento; data de expedição, livro, folha, termo e serventia do registro de óbito.',
+          'Herdeiros, meeiro e respectivos cônjuges: documento de identidade oficial e CPF.',
+          'Vínculo sucessório: certidão comprobatória do parentesco dos herdeiros.',
+          'Estado civil dos interessados: solteiro > certidão de nascimento; casado > certidão de casamento; separado ou divorciado > certidão de casamento com averbação da separação ou do divórcio; viúvo > certidão de casamento e certidão de óbito do cônjuge falecido.',
+          'Cônjuge sobrevivente e herdeiros casados: certidão de casamento e pacto antenupcial, se houver.',
+          'Certidões de nascimento, casamento e óbito usadas para comprovar estado civil e qualidade de herdeiro; para herdeiro maior que se declare solteiro, certidão de nascimento posterior ao óbito do autor da herança.',
+          'Certidão de casamento dos sucessores comprovando o estado civil na data da abertura da sucessão e, se houver renúncia ou cessão da herança, também na data da escritura.',
+          'Advogado ou defensor público: nome, número de inscrição e seção da OAB; qualificação completa do profissional assistente.',
+          'Testamento: certidão comprobatória da inexistência de testamento no Registro Central de Testamentos On-Line; se houver testamento, certidão do testamento e autorização judicial ou decisão transitada em julgado exigível.',
+          'Plano de partilha ou adjudicação: relação dos herdeiros, meeiro, quinhões, meação, dívidas, créditos, pagamentos, cessões, renúncias e eventual torna.',
+          'Tributos: certidão negativa ou certidão positiva com efeitos de negativa de tributos; documento comprobatório do recolhimento do ITCMD e eventuais guias de outros tributos.',
+          'Documentos apresentados: originais ou cópias autenticadas; documentos de identidade das partes sempre em original.'
+        ],
+        imovel: [
+          'Certidão de propriedade dos bens imóveis e dos direitos a eles relativos.',
+          'Certidão atualizada da matrícula ou transcrição do Registro de Imóveis competente, quando necessária à identificação do bem.',
+          'Certidão de ações reais e pessoais reipersecutórias e certidão de ônus reais, quando aplicáveis ao ato e à qualificação do imóvel.',
+          'Bens móveis, quotas, veículos, aplicações, saldos bancários, créditos e outros direitos: documentos necessários à comprovação da titularidade e do valor.',
+          'Imóvel urbano: documento municipal com número de contribuinte ou dados cadastrais do IPTU, quando necessário à descrição e tributação.',
+          'Imóvel rural: CCIR emitido pelo INCRA e documentos cadastrais rurais exigíveis; se houver partilha de imóvel rural, apresentar CCIR.',
+          'Bens localizados no exterior: identificar separadamente, pois a norma paulista veda escritura pública de inventário e partilha referente a bens localizados no exterior.'
+        ],
+        tributos: [
+          'Verificar declaração, guia, homologação, recolhimento ou isenção do ITCMD.',
+          'Conferir eventual incidência de ITBI se houver partilha desigual com torna, conforme regra aplicável.'
+        ],
+        atencao: [
+          'Confirmar capacidade civil dos interessados e consenso sobre a partilha.',
+          'Consultar o RCTO/CENSEC e verificar existência de testamento, decisão judicial, autorização ou hipótese normativa específica.',
+          'Checar representação por procuração pública com poderes específicos.'
+        ]
+      },
+      uniaoEstavel: {
+        nome: 'União estável',
+        resumo: 'Checklist inicial para escritura declaratória ou de reconhecimento de união estável.',
+        documentos: [
+          'Conviventes: documento de identidade oficial ou documento equivalente e CPF.',
+          'Estado civil de cada convivente: solteiro > certidão de nascimento; casado, separado de fato, separado judicialmente ou divorciado > certidão de casamento com as averbações existentes; viúvo > certidão de casamento e certidão de óbito do cônjuge falecido.',
+          'Escritura pública, termo declaratório, sentença, contrato de convivência ou documento anterior de união estável, se houver.',
+          'Regime de bens adotado: declaração das partes e cláusulas patrimoniais pretendidas; pacto, contrato ou escritura anterior, se houver.',
+          'Data de início ou de fim da união estável: documento ou declaração que permita sua indicação quando as partes pretenderem constar essa data.',
+          'Filhos, dependência econômica ou bens comuns: certidões e documentos de comprovação, quando forem mencionados no ato.'
+        ],
+        imovel: [
+          'Certidão atualizada da matrícula ou transcrição do Registro de Imóveis competente.',
+          'Certidão de ações reais e pessoais reipersecutórias e certidão de ônus reais, com prazo de validade de 30 dias.',
+          'Título de aquisição do alienante ou titular, com natureza do negócio, instrumento, matrícula, registro anterior e Registro de Imóveis.',
+          'Certidões dos distribuidores do foro das Justiças Estadual, Federal e Trabalhista, ou dispensa expressa pelo adquirente e declaração do alienante sobre inexistência de ônus reais, judiciais ou extrajudiciais.',
+          'Prova de quitação dos tributos municipais, ou dispensa expressa do adquirente com declaração de responsabilidade pelos débitos fiscais existentes.',
+          'Imóvel urbano: carnê de IPTU, certidão de dados cadastrais ou documento municipal com o número de contribuinte, logradouro, número, bairro, cidade e Estado.',
+          'Guia do ITBI, documento de recolhimento do imposto de transmissão, ou documento que comprove imunidade, isenção, não incidência ou hipótese legal de pagamento posterior à lavratura.',
+          'Certidões do INSS, Receita Federal e órgãos públicos, quando exigidas por lei; se houver dispensa legal ou não sujeição, declaração correspondente sob as penas da lei.',
+          'Pacto antenupcial que alcance o imóvel: certidão ou informação do registro no Registro de Imóveis; se não registrado, menção à necessidade de registro antes da alienação ou oneração.',
+          'Construção, aumento de área, demolição, alteração de cadastro, número predial ou nome de rua: documentos comprobatórios exigíveis para eventual averbação no Registro de Imóveis.',
+          'Imóvel rural: CCIR emitido pelo INCRA, número cadastral rural indicado na norma, prova de quitação do ITR dos últimos cinco anos e autorização do INCRA para desmembramento quando exigível.',
+          'Bens móveis, quotas, veículos, aplicações, saldos bancários, créditos ou outros direitos: documentos necessários à comprovação da titularidade, identificação, valor e eventual ônus.'
+        ],
+        tributos: [
+          'A escritura declaratória de união estável não substitui a análise tributária de eventual transmissão patrimonial presente ou futura.',
+          'Verificar incidência tributária se houver disposição com efeito de transferência de bens ou direitos.'
+        ],
+        atencao: [
+          'Conferir manifestação de vontade de ambos os conviventes e inexistência de impedimento declarado para a união estável.',
+          'Separar escritura declaratória de união estável de eventual escritura de extinção, dissolução ou partilha.',
+          'Evitar cláusulas ambíguas sobre início da convivência, regime patrimonial e efeitos perante terceiros.'
+        ]
+      },
+      sobrepartilha: {
+        nome: 'Sobrepartilha',
+        resumo: 'Checklist inicial para escritura de sobrepartilha extrajudicial.',
+        documentos: [
+          'Interessados, meeiro, herdeiros, ex-cônjuges ou ex-conviventes e respectivos cônjuges, quando aplicável: documento de identidade oficial e CPF.',
+          'Estado civil dos interessados: solteiro > certidão de nascimento; casado > certidão de casamento; separado ou divorciado > certidão de casamento com averbação da separação ou do divórcio; viúvo > certidão de casamento e certidão de óbito do cônjuge falecido.',
+          'Partilha anterior: escritura pública, formal de partilha, carta de sentença, certidão da escritura ou decisão judicial que originou a partilha já realizada.',
+          'Autor da herança ou ato originário: certidão de óbito, certidão de casamento, pacto antenupcial e documentos sucessórios necessários, quando a sobrepartilha decorrer de inventário.',
+          'Advogado ou defensor público: nome, número de inscrição e seção da OAB; qualificação completa do profissional assistente, quando a origem exigir assistência.',
+          'Bem, direito, dívida ou crédito omitido: documento de titularidade, identificação, valor, origem e justificativa da sobrepartilha.',
+          'Plano de sobrepartilha: quinhões, meação, partilha, eventual torna, cessão ou renúncia.',
+          'Tributos: guias, declarações, comprovantes de recolhimento ou documentos de isenção, não incidência ou complementação fiscal.'
+        ],
+        imovel: [
+          'Certidão atualizada da matrícula ou transcrição do Registro de Imóveis competente.',
+          'Certidão de ações reais e pessoais reipersecutórias e certidão de ônus reais, com prazo de validade de 30 dias.',
+          'Título de aquisição do alienante ou titular, com natureza do negócio, instrumento, matrícula, registro anterior e Registro de Imóveis.',
+          'Certidões dos distribuidores do foro das Justiças Estadual, Federal e Trabalhista, ou dispensa expressa pelo adquirente e declaração do alienante sobre inexistência de ônus reais, judiciais ou extrajudiciais.',
+          'Prova de quitação dos tributos municipais, ou dispensa expressa do adquirente com declaração de responsabilidade pelos débitos fiscais existentes.',
+          'Imóvel urbano: carnê de IPTU, certidão de dados cadastrais ou documento municipal com o número de contribuinte, logradouro, número, bairro, cidade e Estado.',
+          'Guia do ITBI, documento de recolhimento do imposto de transmissão, ou documento que comprove imunidade, isenção, não incidência ou hipótese legal de pagamento posterior à lavratura.',
+          'Certidões do INSS, Receita Federal e órgãos públicos, quando exigidas por lei; se houver dispensa legal ou não sujeição, declaração correspondente sob as penas da lei.',
+          'Pacto antenupcial que alcance o imóvel: certidão ou informação do registro no Registro de Imóveis; se não registrado, menção à necessidade de registro antes da alienação ou oneração.',
+          'Construção, aumento de área, demolição, alteração de cadastro, número predial ou nome de rua: documentos comprobatórios exigíveis para eventual averbação no Registro de Imóveis.',
+          'Imóvel rural: CCIR emitido pelo INCRA, número cadastral rural indicado na norma, prova de quitação do ITR dos últimos cinco anos e autorização do INCRA para desmembramento quando exigível.',
+          'Bens móveis, quotas, veículos, aplicações, saldos bancários, créditos ou outros direitos: documentos necessários à comprovação da titularidade, identificação, valor e eventual ônus.'
+        ],
+        tributos: [
+          'Verificar declaração, guia, homologação, recolhimento ou isenção do imposto aplicável ao caso.',
+          'Conferir eventual incidência de ITBI ou ITCMD se houver partilha desigual, torna ou transmissão patrimonial.'
+        ],
+        atencao: [
+          'Conferir se o bem foi omitido, sonegado, descoberto posteriormente ou reservado para partilha futura.',
+          'Verificar capacidade civil dos interessados, consenso e necessidade de participação de cônjuges ou conviventes.',
+          'Checar se o ato anterior, testamento, decisão judicial ou presença de incapaz exige providência prévia.'
+        ]
+      },
+      divorcio: {
+        nome: 'Divórcio e Extinção de União Estável',
+        resumo: 'Checklist inicial para divórcio consensual ou extinção consensual de união estável por escritura pública.',
+        documentos: [
+          'Cônjuges ou conviventes: documento de identidade oficial ou documento equivalente e CPF.',
+          'Divórcio: certidão de casamento; se já houver separação, certidão de casamento com averbação da separação; para conversão de separação em divórcio, certidão da averbação da separação no assento de casamento.',
+          'Extinção de união estável: escritura declaratória, termo declaratório, sentença, contrato de convivência ou outro documento que comprove a união estável, quando existente.',
+          'Pacto antenupcial ou contrato de convivência, se houver, com dados do registro quando aplicável.',
+          'Filhos: certidão de nascimento ou outro documento de identidade oficial; havendo filhos comuns, indicar nomes, datas de nascimento e capacidade.',
+          'Filhos menores ou incapazes: decisão judicial prévia sobre guarda, convivência familiar e alimentos, com comprovação para constar na escritura.',
+          'Gravidez: declaração de inexistência de gravidez do cônjuge virago ou de desconhecimento dessa condição, quando aplicável.',
+          'Advogado ou defensor público: nome, número de inscrição e seção da OAB; qualificação completa do profissional assistente.',
+          'Procuração para representação: instrumento público com poderes especiais, cláusulas essenciais e prazo de validade de 30 dias; se lavrada no exterior, registrada em Registro de Títulos e Documentos e traduzida, quando necessário, com prazo de até 90 dias.',
+          'Partilha, alimentos e nome: declaração sobre retomada ou manutenção do nome, alimentos entre cônjuges ou conviventes, bens particulares, bens comuns, dívidas e eventual partilha posterior.',
+          'Tributos: comprovante de recolhimento do tributo devido se houver transmissão de patrimônio individual ou partilha desigual do patrimônio comum.'
+        ],
+        imovel: [
+          'Certidão de propriedade dos bens imóveis e dos direitos a eles relativos.',
+          'Certidão atualizada da matrícula ou transcrição do Registro de Imóveis competente.',
+          'Certidão de ações reais e pessoais reipersecutórias e certidão de ônus reais, com prazo de validade de 30 dias, quando exigíveis pela qualificação do ato.',
+          'Documentos necessários à comprovação da titularidade de bens móveis, veículos, quotas, saldos, investimentos, créditos e demais direitos.',
+          'Imóvel urbano: carnê de IPTU, certidão de dados cadastrais ou documento municipal com número de contribuinte.',
+          'Imóvel rural: CCIR emitido pelo INCRA, documentos cadastrais rurais e prova de quitação do ITR quando aplicáveis.',
+          'Partilha de bens imóveis: documentos fiscais e guia do ITBI ou ITCMD quando houver transmissão tributável ou partilha desigual.'
+        ],
+        tributos: [
+          'Verificar eventual incidência de ITBI ou ITCMD em partilha desigual, conforme regra aplicável.',
+          'Guardar guias, comprovantes ou documentos de reconhecimento de isenção, quando existentes.'
+        ],
+        atencao: [
+          'Confirmar consenso entre as partes.',
+          'Verificar se há filhos comuns menores ou incapazes. Nessa hipótese, confirmar prévia resolução judicial de guarda, convivência e alimentos, quando exigida.',
+          'Conferir se todos os bens e dívidas foram descritos com clareza.'
+        ]
+      },
+      pacto: {
+        nome: 'Pacto antenupcial',
+        resumo: 'Checklist inicial para escritura pública de pacto antenupcial.',
+        documentos: [
+          'Nubentes: documento de identidade oficial ou documento equivalente e CPF.',
+          'Estado civil dos nubentes: solteiro > certidão de nascimento; separado ou divorciado > certidão de casamento com averbação da separação ou do divórcio; viúvo > certidão de casamento e certidão de óbito do cônjuge falecido.',
+          'Domicílio, residência, nacionalidade e profissão dos nubentes, conforme documento apresentado ou declaração para qualificação.',
+          'Regime de bens escolhido e cláusulas patrimoniais pretendidas.',
+          'Minuta das disposições convencionais, se houver, com indicação de bens, administração patrimonial, efeitos perante terceiros e necessidade de registro posterior.'
+        ],
+        imovel: [
+          'Bens imóveis mencionados no pacto: certidão atualizada da matrícula ou transcrição do Registro de Imóveis competente.',
+          'Bens móveis, quotas, veículos, aplicações, saldos bancários, créditos ou outros direitos mencionados no pacto: documentos de titularidade, identificação e valor.',
+          'Pacto com reflexo sobre imóvel: observar a necessidade de registro no Registro de Imóveis competente para eficácia perante terceiros.'
+        ],
+        tributos: [
+          'Em regra, a lavratura do pacto não substitui a análise tributária de eventual transmissão patrimonial futura.',
+          'Verificar incidência tributária se houver disposição com efeito de transmissão de bens ou direitos.'
+        ],
+        atencao: [
+          'Alertar sobre a necessidade de registro do pacto conforme a situação jurídica aplicável.',
+          'Evitar cláusulas que afastem deveres legais indisponíveis ou gerem ambiguidade na administração patrimonial.',
+          'Conferir se a redação é compatível com o regime escolhido.'
+        ]
+      },
+      procuracao: {
+        nome: 'Procuração pública',
+        resumo: 'Checklist inicial para lavratura de procuração pública.',
+        documentos: [
+          'Outorgante pessoa física: documento de identidade oficial ou documento equivalente e CPF.',
+          'Estado civil do outorgante: solteiro > certidão de nascimento, quando necessária; casado > certidão de casamento; separado ou divorciado > certidão de casamento com averbação da separação ou do divórcio; viúvo > certidão de casamento e certidão de óbito do cônjuge falecido.',
+          'Regime de bens e cônjuge: certidão de casamento, pacto antenupcial e qualificação do cônjuge quando os poderes exigirem anuência ou atingirem patrimônio comum.',
+          'Procurador: nome, nacionalidade, estado civil, profissão, documento de identidade, CPF, domicílio e residência, ou dados mínimos fornecidos para sua qualificação.',
+          'Poderes outorgados: minuta ou instrução escrita com a finalidade do mandato, poderes especiais, prazo, substabelecimento, autocontratação, recebimento de preço, quitação e representação perante órgãos específicos, se houver.',
+          'Advogado como outorgado: número de inscrição na OAB ou declaração do outorgante de que ignora esse número; sociedade de advogados > identificação dos advogados que a integram.'
+        ],
+        imovel: [
+          'Poderes sobre imóvel: certidão atualizada da matrícula ou transcrição, ou dados suficientes de matrícula, transcrição, endereço, cadastro municipal e Registro de Imóveis.',
+          'Negócio autorizado: identificação expressa do ato pretendido, como vender, comprar, doar, hipotecar, alienar fiduciariamente, permutar, receber preço, dar quitação, instituir garantia ou assinar escritura.',
+          'Procuração de origem estrangeira usada no ato: registro em Registro de Títulos e Documentos e tradução pública, quando necessária, com referência ao livro e folha do registro.'
+        ],
+        tributos: [
+          'A procuração não substitui a análise tributária do ato que vier a ser praticado pelo procurador.'
+        ],
+        atencao: [
+          'Conferir capacidade e manifestação de vontade do outorgante.',
+          'Poderes especiais devem ser redigidos de modo expresso quando exigidos.',
+          'Verificar aceitação da procuração pelo órgão, banco, consulado, registro ou instituição destinatária.'
+        ]
+      },
+      ata: {
+        nome: 'Ata notarial',
+        resumo: 'Checklist inicial para ata notarial de constatação, prova ou certificação.',
+        documentos: [
+          'Solicitante: documento de identidade oficial ou documento equivalente e CPF.',
+          'Qualificação do solicitante: nome, nacionalidade, estado civil, profissão, documento de identidade, CPF, domicílio e residência.',
+          'Fato a constatar: indicação objetiva do fato jurídico, local, data, hora e, se diversa, hora em que os fatos serão presenciados ou verificados.',
+          'Meio de constatação: endereço físico, endereço eletrônico, plataforma, conversa, imagem, documento, reunião, arquivo, link ou ambiente a ser verificado.',
+          'Documentos, imagens, arquivos, laudos, relatórios técnicos ou declarações que serão apresentados para instruir a ata, quando aplicável.',
+          'Testemunhas, técnicos ou peritos: documento de identificação, CPF, qualificação e documento técnico ou relatório, se comparecerem ou assinarem o ato.',
+          'Menor ou adolescente em conteúdo sensível: boletim de ocorrência, se houver, e dados necessários à comunicação ao Ministério Público ou autoridade policial, quando aplicável.'
+        ],
+        imovel: [
+          'Constatação física em imóvel: endereço completo, autorização de acesso, identificação do responsável pelo acesso e elementos de localização.',
+          'Se a ata envolver posse, ocupação, estado físico ou situação registral do imóvel: matrícula ou transcrição, documentos cadastrais, fotos, plantas, contas, notificações e demais documentos apresentados.',
+          'Se houver diligência externa: dados do local, data, horário pretendido e pessoa responsável pelo acompanhamento.'
+        ],
+        tributos: [
+          'Verificar se a ata possui conteúdo econômico declarado ou mensurável, conforme tabela de custas aplicável.',
+          'Diligências externas e atos fora do horário podem exigir enquadramento próprio, conforme norma local.'
+        ],
+        atencao: [
+          'A ata deve narrar fatos percebidos pelo tabelião ou preposto autorizado, sem emitir conclusão jurídica indevida.',
+          'Conferir proteção de dados pessoais, imagem de terceiros, menores, sigilo e eventual necessidade de anonimização.',
+          'Separar constatação técnica de juízo de valor, autoria, fraude, validade jurídica ou responsabilidade.'
+        ]
+      },
+      usucapiao: {
+        nome: 'Ata para usucapião extrajudicial',
+        resumo: 'Checklist inicial para ata notarial destinada à instrução de usucapião extrajudicial.',
+        documentos: [
+          'Requerente e cônjuge ou convivente, quando aplicável: documento de identidade oficial ou documento equivalente e CPF.',
+          'Estado civil do requerente: solteiro > certidão de nascimento; casado > certidão de casamento; separado ou divorciado > certidão de casamento com averbação da separação ou do divórcio; viúvo > certidão de casamento e certidão de óbito do cônjuge falecido.',
+          'Advogado ou defensor público: procuração e qualificação do profissional, quando o requerimento registral exigir assistência.',
+          'Relato da posse: início, forma de aquisição, continuidade, finalidade, modalidade de usucapião pretendida, soma de posses e identificação dos antecessores.',
+          'Justo título ou outros documentos que demonstrem origem, continuidade, natureza e tempo da posse, como contratos, recibos, contas, tributos, correspondências, fotos, declarações e documentos de ocupação.',
+          'Declaração dos requerentes sobre desconhecimento de ação possessória ou reivindicatória em trâmite envolvendo o imóvel, quando constar da ata.',
+          'Declarações de testemunhas sobre tempo e características da posse, especialmente em lote vago ou área sem edificação, quando necessário.',
+          'Certidões negativas dos distribuidores, quando exigidas no procedimento de usucapião extrajudicial, ressalvada impossibilidade documentada de obtenção por falta de qualificação dos titulares do domínio.',
+          'Valor do imóvel declarado pelo requerente: valor venal do último lançamento de IPTU ou ITR ou, se inexistente, valor aproximado de mercado.'
+        ],
+        imovel: [
+          'Matrícula ou transcrição do imóvel usucapiendo, ou certidão negativa quando não houver registro individualizado.',
+          'Planta e memorial descritivo assinados por profissional habilitado e pelos titulares de direitos reais e confrontantes, quando exigíveis.',
+          'ART, RRT ou TRT do responsável técnico pela planta e memorial descritivo.',
+          'Reconhecimento de firma das assinaturas lançadas na planta e no memorial descritivo, por semelhança ou autenticidade, quando exigido pela norma paulista.',
+          'Unidade autônoma de condomínio edilício ou loteamento regularmente instituído: descrição constante da matrícula, quando dispensada planta e memorial descritivo.',
+          'Imóvel urbano: IPTU, certidão de dados cadastrais, número de contribuinte e endereço completo.',
+          'Imóvel rural: CCIR, ITR, documentos cadastrais rurais, área, confrontações, localização e elementos de identificação.',
+          'Cópias do requerimento, ata notarial, planta, memorial e demais documentos em quantidade suficiente para notificação dos titulares de direitos e confrontantes que não assinaram.'
+        ],
+        tributos: [
+          'A ata não substitui a qualificação registral nem a análise de tributos eventualmente exigidos em etapas posteriores.'
+        ],
+        atencao: [
+          'A ata deve documentar a percepção notarial e os elementos apresentados, sem declarar aquisição de propriedade.',
+          'Verificar coerência entre relato da posse, documentos, área, confrontações e modalidade pretendida.',
+          'Separar documentos de posse de documentos de domínio.'
+        ]
+      },
+      adjudicacao: {
+        nome: 'Ata para adjudicação compulsória extrajudicial',
+        resumo: 'Checklist inicial para ata notarial destinada à adjudicação compulsória extrajudicial.',
+        documentos: [
+          'Requerente, requerido, cedentes, cessionários, sucessores, cônjuges ou companheiros: documento de identidade oficial, CPF ou CNPJ, endereço e qualificação.',
+          'Advogado ou defensor público: procuração com poderes específicos para o processo de adjudicação compulsória extrajudicial.',
+          'Instrumento de promessa de compra e venda, promessa de cessão, cessão, sucessão ou outro ato ou negócio jurídico que fundamenta a adjudicação.',
+          'Histórico de cessões e sucessões: instrumentos, valores, natureza das estipulações, existência ou não de direito de arrependimento e identificação de quem deve constar como requerido.',
+          'Prova do adimplemento integral do preço ou do cumprimento da contraprestação à transferência do imóvel.',
+          'Prova do inadimplemento da obrigação de outorgar ou receber o título de propriedade, inclusive notificação extrajudicial e decurso do prazo legal, quando aplicável.',
+          'Declaração do requerente, sob as penas da lei, de inexistência de processo judicial que possa impedir o registro, ou prova de extinção ou suspensão por mais de 90 dias úteis.',
+          'Ata notarial para adjudicação compulsória contendo os requisitos nacionais e locais.',
+          'Certidões dos distribuidores forenses da comarca da situação do imóvel e do domicílio do requerente demonstrando inexistência de litígio envolvendo o contrato.',
+          'Requerimento inicial para o Registro de Imóveis com pedidos de notificação do requerido e de deferimento da adjudicação compulsória.'
+        ],
+        imovel: [
+          'Matrícula ou transcrição do imóvel adjudicando e, se o registro estiver em circunscrição anterior, certidão do registro anterior.',
+          'Descrição do imóvel com seus ônus e gravames; para imóvel urbano matriculado, identificação ou denominação do bem e endereço podem bastar, sem prejuízo de complemento de especialidade.',
+          'Certidão de ônus reais, ações reais e pessoais reipersecutórias e demais certidões necessárias à qualificação registral.',
+          'Valor venal atribuído ao imóvel adjudicando na data do requerimento inicial, segundo a legislação local.',
+          'Documentos que aperfeiçoem ou complementem a especialidade objetiva do imóvel, como cadastro municipal, planta, descrição, área, confrontações e elementos de localização.',
+          'Tributos e guias pertinentes à transferência, inclusive ITBI, isenção, imunidade ou não incidência, conforme exigência municipal e registral.'
+        ],
+        tributos: [
+          'Verificar ITBI, base de cálculo, guia, isenção ou exigência municipal pertinente ao caso.',
+          'A ata não substitui a qualificação registral nem eventual exigência fiscal ou registral.'
+        ],
+        atencao: [
+          'A ata deve certificar elementos apresentados e fatos verificáveis, sem suprir a qualificação do registro imobiliário.',
+          'Conferir cadeia negocial, legitimidade das partes e correspondência entre contrato e matrícula.',
+          'Verificar se há impedimento registral ou judicial que exija solução prévia.'
+        ]
+      },
+      alienacaoFiduciaria: {
+        nome: 'Alienação fiduciária em garantia',
+        resumo: 'Checklist inicial para escritura com constituição de alienação fiduciária em garantia.',
+        documentos: [
+          'Pessoa física: documento de identidade oficial ou documento equivalente e CPF.',
+          'Estado civil: solteiro > certidão de nascimento, quando necessária à comprovação; casado > certidão de casamento; separado ou divorciado > certidão de casamento com averbação da separação ou do divórcio; viúvo > certidão de casamento e certidão de óbito do cônjuge falecido.',
+          'Regime de bens: certidão de casamento com indicação do regime; pacto antenupcial e certidão ou informação do registro do pacto no Registro de Imóveis, se houver.',
+          'Cônjuge, convivente, representante, interveniente ou anuente: documento de identidade oficial, CPF e qualificação completa, quando comparecer ou quando o ato exigir anuência.',
+          'Representação: instrumento de procuração pública ou substabelecimento, com poderes especiais quando exigidos; se a procuração for usada para o ato, apresentar certidão expedida nos 90 dias anteriores, quando aplicável.',
+          'Devedor, credor fiduciário, fiduciante, intervenientes, garantidores e cônjuges ou conviventes: documento de identidade oficial, CPF ou CNPJ e qualificação completa.',
+          'Obrigação garantida: instrumento da dívida, contrato, confissão de dívida ou documento equivalente com valor, vencimento, encargos, juros, correção, multa, prazo e condições de mora.',
+          'Garantia: minuta ou cláusulas de alienação fiduciária, avaliação do bem, regras de vencimento antecipado, intimação, consolidação, leilões e quitação.',
+          'Forma de liberação do crédito e pagamento: dados bancários, comprovantes ou declaração das partes, quando necessários à redação do ato.'
+        ],
+        imovel: [
+          'Certidão atualizada da matrícula ou transcrição do Registro de Imóveis competente.',
+          'Certidão de ações reais e pessoais reipersecutórias e certidão de ônus reais, com prazo de validade de 30 dias.',
+          'Título de aquisição do alienante ou titular, com natureza do negócio, instrumento, matrícula, registro anterior e Registro de Imóveis.',
+          'Certidões dos distribuidores do foro das Justiças Estadual, Federal e Trabalhista, ou dispensa expressa pelo adquirente e declaração do alienante sobre inexistência de ônus reais, judiciais ou extrajudiciais.',
+          'Prova de quitação dos tributos municipais, ou dispensa expressa do adquirente com declaração de responsabilidade pelos débitos fiscais existentes.',
+          'Imóvel urbano: carnê de IPTU, certidão de dados cadastrais ou documento municipal com o número de contribuinte, logradouro, número, bairro, cidade e Estado.',
+          'Guia do ITBI, documento de recolhimento do imposto de transmissão, ou documento que comprove imunidade, isenção, não incidência ou hipótese legal de pagamento posterior à lavratura.',
+          'Certidões do INSS, Receita Federal e órgãos públicos, quando exigidas por lei; se houver dispensa legal ou não sujeição, declaração correspondente sob as penas da lei.',
+          'Pacto antenupcial que alcance o imóvel: certidão ou informação do registro no Registro de Imóveis; se não registrado, menção à necessidade de registro antes da alienação ou oneração.',
+          'Construção, aumento de área, demolição, alteração de cadastro, número predial ou nome de rua: documentos comprobatórios exigíveis para eventual averbação no Registro de Imóveis.',
+          'Imóvel rural: CCIR emitido pelo INCRA, número cadastral rural indicado na norma, prova de quitação do ITR dos últimos cinco anos e autorização do INCRA para desmembramento quando exigível.',
+          'Valor de avaliação do imóvel dado em garantia e critérios adotados pelas partes.',
+          'Documentos sobre ônus, indisponibilidade, penhora, hipoteca, usufruto, locação, alienação fiduciária anterior ou outra restrição incidente sobre o imóvel.'
+        ],
+        tributos: [
+          'Verificar incidência de emolumentos e tributos conforme natureza do negócio e legislação aplicável.',
+          'A constituição de garantia não dispensa a análise registral e fiscal própria.'
+        ],
+        atencao: [
+          'Conferir requisitos da garantia, cláusulas de vencimento, intimação, consolidação e leilões, conforme lei aplicável.',
+          'Verificar se o bem pode ser dado em garantia e se há anuências necessárias.',
+          'Separar obrigação principal, garantia, avaliação, prazo, encargos e regras de execução.'
+        ]
+      },
+      distrato: {
+        nome: 'Distrato, rescisão ou desfazimento',
+        resumo: 'Checklist inicial para escritura de distrato, rescisão ou negócio de retorno patrimonial.',
+        documentos: [
+          'Pessoa física: documento de identidade oficial ou documento equivalente e CPF.',
+          'Estado civil: solteiro > certidão de nascimento, quando necessária à comprovação; casado > certidão de casamento; separado ou divorciado > certidão de casamento com averbação da separação ou do divórcio; viúvo > certidão de casamento e certidão de óbito do cônjuge falecido.',
+          'Regime de bens: certidão de casamento com indicação do regime; pacto antenupcial e certidão ou informação do registro do pacto no Registro de Imóveis, se houver.',
+          'Cônjuge, convivente, representante, interveniente ou anuente: documento de identidade oficial, CPF e qualificação completa, quando comparecer ou quando o ato exigir anuência.',
+          'Representação: instrumento de procuração pública ou substabelecimento, com poderes especiais quando exigidos; se a procuração for usada para o ato, apresentar certidão expedida nos 90 dias anteriores, quando aplicável.',
+          'Negócio a desfazer: escritura pública, contrato, instrumento particular, recibos, registros, averbações, garantias e documentos que demonstrem o ato originário.',
+          'Motivo e condições do desfazimento: minuta, acordo, declaração de vontade, valores a restituir, quitação, multas, perdas, despesas, saldo e forma de pagamento.',
+          'Comprovantes financeiros: recibos, transferências, cheques, comprovantes de depósito, conta notarial vinculada ou outros documentos de pagamento.',
+          'Tributos e registro anterior: guias pagas, pedidos de restituição, documentos fiscais e certidões pertinentes ao ato anterior, quando houver.'
+        ],
+        imovel: [
+          'Certidão atualizada da matrícula ou transcrição do Registro de Imóveis competente.',
+          'Certidão de ações reais e pessoais reipersecutórias e certidão de ônus reais, com prazo de validade de 30 dias.',
+          'Título de aquisição do alienante ou titular, com natureza do negócio, instrumento, matrícula, registro anterior e Registro de Imóveis.',
+          'Certidões dos distribuidores do foro das Justiças Estadual, Federal e Trabalhista, ou dispensa expressa pelo adquirente e declaração do alienante sobre inexistência de ônus reais, judiciais ou extrajudiciais.',
+          'Prova de quitação dos tributos municipais, ou dispensa expressa do adquirente com declaração de responsabilidade pelos débitos fiscais existentes.',
+          'Imóvel urbano: carnê de IPTU, certidão de dados cadastrais ou documento municipal com o número de contribuinte, logradouro, número, bairro, cidade e Estado.',
+          'Guia do ITBI, documento de recolhimento do imposto de transmissão, ou documento que comprove imunidade, isenção, não incidência ou hipótese legal de pagamento posterior à lavratura.',
+          'Certidões do INSS, Receita Federal e órgãos públicos, quando exigidas por lei; se houver dispensa legal ou não sujeição, declaração correspondente sob as penas da lei.',
+          'Pacto antenupcial que alcance o imóvel: certidão ou informação do registro no Registro de Imóveis; se não registrado, menção à necessidade de registro antes da alienação ou oneração.',
+          'Construção, aumento de área, demolição, alteração de cadastro, número predial ou nome de rua: documentos comprobatórios exigíveis para eventual averbação no Registro de Imóveis.',
+          'Imóvel rural: CCIR emitido pelo INCRA, número cadastral rural indicado na norma, prova de quitação do ITR dos últimos cinco anos e autorização do INCRA para desmembramento quando exigível.',
+          'Escritura, registro ou certidão do ato anterior que produziu o efeito real a ser desfeito.',
+          'Situação atual da posse, domínio, ônus, averbações, garantias, indisponibilidades e eventuais restrições registrais.'
+        ],
+        tributos: [
+          'Verificar se o desfazimento gera nova transmissão, restituição, cancelamento, isenção ou exigência fiscal.',
+          'Conferir orientação municipal ou estadual quando houver imposto recolhido no negócio anterior.'
+        ],
+        atencao: [
+          'Não presumir que o distrato cancela automaticamente efeitos reais já registrados.',
+          'Verificar se será necessário novo ato transmissivo, averbação, cancelamento registral ou ordem judicial.',
+          'Conferir quitação ampla e limites da manifestação das partes.'
+        ]
+      },
+      dacaoPagamento: {
+        nome: 'Dação em pagamento',
+        resumo: 'Checklist inicial para escritura de dação em pagamento.',
+        documentos: [
+          'Pessoa física: documento de identidade oficial ou documento equivalente e CPF.',
+          'Estado civil: solteiro > certidão de nascimento, quando necessária à comprovação; casado > certidão de casamento; separado ou divorciado > certidão de casamento com averbação da separação ou do divórcio; viúvo > certidão de casamento e certidão de óbito do cônjuge falecido.',
+          'Regime de bens: certidão de casamento com indicação do regime; pacto antenupcial e certidão ou informação do registro do pacto no Registro de Imóveis, se houver.',
+          'Cônjuge, convivente, representante, interveniente ou anuente: documento de identidade oficial, CPF e qualificação completa, quando comparecer ou quando o ato exigir anuência.',
+          'Representação: instrumento de procuração pública ou substabelecimento, com poderes especiais quando exigidos; se a procuração for usada para o ato, apresentar certidão expedida nos 90 dias anteriores, quando aplicável.',
+          'Dívida ou obrigação: contrato, confissão de dívida, título, instrumento originário ou documento que comprove a obrigação a ser satisfeita.',
+          'Valor atualizado da dívida: demonstrativo, critérios de atualização, vencimento, encargos, juros, correção, multa e eventual saldo remanescente.',
+          'Bem entregue em pagamento: documento de titularidade, descrição, valor atribuído, ônus e declaração sobre quitação total ou parcial.',
+          'Forma de quitação: declaração expressa do credor sobre quitação, saldo, substituição da obrigação ou outras condições pactuadas.'
+        ],
+        imovel: [
+          'Certidão atualizada da matrícula ou transcrição do Registro de Imóveis competente.',
+          'Certidão de ações reais e pessoais reipersecutórias e certidão de ônus reais, com prazo de validade de 30 dias.',
+          'Título de aquisição do alienante ou titular, com natureza do negócio, instrumento, matrícula, registro anterior e Registro de Imóveis.',
+          'Certidões dos distribuidores do foro das Justiças Estadual, Federal e Trabalhista, ou dispensa expressa pelo adquirente e declaração do alienante sobre inexistência de ônus reais, judiciais ou extrajudiciais.',
+          'Prova de quitação dos tributos municipais, ou dispensa expressa do adquirente com declaração de responsabilidade pelos débitos fiscais existentes.',
+          'Imóvel urbano: carnê de IPTU, certidão de dados cadastrais ou documento municipal com o número de contribuinte, logradouro, número, bairro, cidade e Estado.',
+          'Guia do ITBI, documento de recolhimento do imposto de transmissão, ou documento que comprove imunidade, isenção, não incidência ou hipótese legal de pagamento posterior à lavratura.',
+          'Certidões do INSS, Receita Federal e órgãos públicos, quando exigidas por lei; se houver dispensa legal ou não sujeição, declaração correspondente sob as penas da lei.',
+          'Pacto antenupcial que alcance o imóvel: certidão ou informação do registro no Registro de Imóveis; se não registrado, menção à necessidade de registro antes da alienação ou oneração.',
+          'Construção, aumento de área, demolição, alteração de cadastro, número predial ou nome de rua: documentos comprobatórios exigíveis para eventual averbação no Registro de Imóveis.',
+          'Imóvel rural: CCIR emitido pelo INCRA, número cadastral rural indicado na norma, prova de quitação do ITR dos últimos cinco anos e autorização do INCRA para desmembramento quando exigível.',
+          'Bens móveis, quotas, veículos, aplicações, saldos bancários, créditos ou outros direitos: documentos necessários à comprovação da titularidade, identificação, valor e eventual ônus.'
+        ],
+        tributos: [
+          'Verificar incidência de ITBI quando a dação em pagamento envolver transmissão de imóvel.',
+          'Conferir eventual incidência tributária conforme a natureza do bem, da obrigação e da quitação.',
+          'Guardar guias, comprovantes ou documentos de reconhecimento de isenção, quando existentes.'
+        ],
+        atencao: [
+          'Conferir origem, liquidez e exigibilidade da dívida.',
+          'Verificar correspondência entre valor da dívida, valor do bem e extensão da quitação.',
+          'Checar necessidade de anuência conjugal, anuência de credor, baixa de garantia ou registro posterior.'
+        ]
+      },
+      nomeacaoInventariante: {
+        nome: 'Nomeação de inventariante',
+        resumo: 'Checklist inicial para escritura autônoma de nomeação de inventariante extrajudicial.',
+        documentos: [
+          'Autor da herança: certidão de óbito; documento de identidade oficial e CPF, se disponível.',
+          'Meeiro, herdeiros e interessado indicado para inventariante: documento de identidade oficial e CPF.',
+          'Vínculo sucessório: certidão comprobatória do parentesco dos herdeiros.',
+          'Estado civil dos interessados: solteiro > certidão de nascimento; casado > certidão de casamento; separado ou divorciado > certidão de casamento com averbação da separação ou do divórcio; viúvo > certidão de casamento e certidão de óbito do cônjuge falecido.',
+          'Cônjuge sobrevivente e herdeiros casados: certidão de casamento e pacto antenupcial, se houver.',
+          'Advogado ou defensor público: nome, número de inscrição e seção da OAB; qualificação completa do profissional assistente.',
+          'Declaração de consenso dos interessados sobre a nomeação e a finalidade da representação do espólio.',
+          'Finalidade da nomeação: documentos bancários, fiscais, empresariais ou negociais que justifiquem a busca de informações ou o levantamento de quantias para despesas do inventário, quando houver.',
+          'Termo inicial do procedimento: indicação de que a nomeação de inventariante será considerada termo inicial do procedimento de inventário extrajudicial.'
+        ],
+        imovel: [
+          'Relação preliminar dos bens do espólio, quando necessária à finalidade da nomeação.',
+          'Bens imóveis: certidão atualizada da matrícula ou transcrição, se a providência do inventariante depender de identificação imobiliária.',
+          'Bens móveis, quotas, veículos, saldos, aplicações, créditos e demais direitos: documentos de titularidade ou identificação, quando disponíveis.'
+        ],
+        tributos: [
+          'A nomeação de inventariante não substitui a declaração, conferência ou recolhimento dos tributos incidentes no inventário.',
+          'Verificar prazos fiscais aplicáveis ao inventário e documentos exigidos pela Fazenda competente.'
+        ],
+        atencao: [
+          'A escritura autônoma de nomeação serve para viabilizar providências do espólio e não realiza a partilha.',
+          'Confirmar consenso dos interessados e poderes atribuídos ao inventariante.',
+          'Verificar se há testamento, incapaz, conflito entre interessados ou necessidade de autorização judicial.'
+        ]
+      },
+      confissaoDivida: {
+        nome: 'Confissão de dívida',
+        resumo: 'Checklist inicial para escritura de confissão de dívida.',
+        documentos: [
+          'Pessoa física: documento de identidade oficial ou documento equivalente e CPF.',
+          'Estado civil: solteiro > certidão de nascimento, quando necessária à comprovação; casado > certidão de casamento; separado ou divorciado > certidão de casamento com averbação da separação ou do divórcio; viúvo > certidão de casamento e certidão de óbito do cônjuge falecido.',
+          'Regime de bens: certidão de casamento com indicação do regime; pacto antenupcial e certidão ou informação do registro do pacto no Registro de Imóveis, se houver.',
+          'Cônjuge, convivente, representante, interveniente ou anuente: documento de identidade oficial, CPF e qualificação completa, quando comparecer ou quando o ato exigir anuência.',
+          'Representação: instrumento de procuração pública ou substabelecimento, com poderes especiais quando exigidos; se a procuração for usada para o ato, apresentar certidão expedida nos 90 dias anteriores, quando aplicável.',
+          'Devedor, credor, intervenientes, garantidores e cônjuges ou conviventes: documento de identidade oficial, CPF ou CNPJ e qualificação completa.',
+          'Origem da dívida: contrato, nota, recibo, instrumento particular, demonstrativo, declaração ou outro documento que indique a causa da obrigação, quando existente.',
+          'Valor da dívida: demonstrativo com principal, juros, correção, multa, encargos, vencimento, parcelas, forma de pagamento e prazo.',
+          'Garantias pessoais ou reais: documentos dos fiadores, avalistas, garantidores, bens dados em garantia, autorizações e anuências necessárias.',
+          'Forma de pagamento: dados bancários, cheques identificados por número e banco sacado, comprovantes ou declaração de forma de pagamento, quando necessário.'
+        ],
+        imovel: [
+          'Certidão atualizada da matrícula ou transcrição do Registro de Imóveis competente.',
+          'Certidão de ações reais e pessoais reipersecutórias e certidão de ônus reais, com prazo de validade de 30 dias.',
+          'Título de aquisição do alienante ou titular, com natureza do negócio, instrumento, matrícula, registro anterior e Registro de Imóveis.',
+          'Certidões dos distribuidores do foro das Justiças Estadual, Federal e Trabalhista, ou dispensa expressa pelo adquirente e declaração do alienante sobre inexistência de ônus reais, judiciais ou extrajudiciais.',
+          'Prova de quitação dos tributos municipais, ou dispensa expressa do adquirente com declaração de responsabilidade pelos débitos fiscais existentes.',
+          'Imóvel urbano: carnê de IPTU, certidão de dados cadastrais ou documento municipal com o número de contribuinte, logradouro, número, bairro, cidade e Estado.',
+          'Guia do ITBI, documento de recolhimento do imposto de transmissão, ou documento que comprove imunidade, isenção, não incidência ou hipótese legal de pagamento posterior à lavratura.',
+          'Certidões do INSS, Receita Federal e órgãos públicos, quando exigidas por lei; se houver dispensa legal ou não sujeição, declaração correspondente sob as penas da lei.',
+          'Pacto antenupcial que alcance o imóvel: certidão ou informação do registro no Registro de Imóveis; se não registrado, menção à necessidade de registro antes da alienação ou oneração.',
+          'Construção, aumento de área, demolição, alteração de cadastro, número predial ou nome de rua: documentos comprobatórios exigíveis para eventual averbação no Registro de Imóveis.',
+          'Imóvel rural: CCIR emitido pelo INCRA, número cadastral rural indicado na norma, prova de quitação do ITR dos últimos cinco anos e autorização do INCRA para desmembramento quando exigível.',
+          'Garantia real imobiliária: documento da garantia pretendida, valor de avaliação do imóvel e autorização ou anuência de cônjuge, convivente, coproprietário ou credor, quando exigível.',
+          'Documentos sobre ônus, indisponibilidade, penhora, hipoteca, alienação fiduciária, usufruto ou outra restrição incidente sobre o imóvel.'
+        ],
+        tributos: [
+          'Verificar eventual incidência tributária conforme natureza da obrigação, garantia e fluxo financeiro.',
+          'A confissão de dívida não substitui a análise tributária de eventual garantia, transmissão ou operação financeira associada.'
+        ],
+        atencao: [
+          'Redigir obrigação com valor certo, vencimento, forma de pagamento e critérios objetivos de atualização.',
+          'Separar confissão da dívida, novação, garantia, quitação e vencimento antecipado.',
+          'Conferir anuências necessárias e compatibilidade da garantia com o regime de bens e a titularidade do bem.'
+        ]
+      },
+      testamento: {
+        nome: 'Testamento ou revogação de testamento',
+        resumo: 'Checklist inicial para testamento público ou escritura de revogação testamentária.',
+        documentos: [
+          'Testador: documento de identidade oficial ou documento equivalente e CPF.',
+          'Estado civil do testador: solteiro > certidão de nascimento, quando necessária; casado > certidão de casamento; separado ou divorciado > certidão de casamento com averbação da separação ou do divórcio; viúvo > certidão de casamento e certidão de óbito do cônjuge falecido.',
+          'Regime de bens: certidão de casamento com indicação do regime; pacto antenupcial e registro imobiliário, se houver.',
+          'Cônjuge ou convivente: documento de identidade oficial, CPF e qualificação, quando relevante para a análise patrimonial.',
+          'Herdeiros necessários e beneficiários: nomes, qualificações e documentos de identificação disponíveis, quando forem individualizados.',
+          'Disposições patrimoniais e não patrimoniais: minuta ou relação de disposições pretendidas, indicação de testamenteiro, substitutos, legados, cláusulas e revogações.',
+          'Revogação de testamento: dados do testamento anterior, certidão ou traslado disponível, livro, folhas, data e serventia em que foi lavrado, se conhecidos.',
+          'Testamento cerrado: instrumento escrito e assinado pelo testador, ou por pessoa a seu rogo, e presença de duas testemunhas para aprovação, quando for essa a modalidade.'
+        ],
+        imovel: [
+          'Bens imóveis mencionados individualmente: certidão atualizada da matrícula ou transcrição do Registro de Imóveis competente.',
+          'Bens móveis, quotas, veículos, aplicações, saldos bancários, créditos ou outros direitos mencionados individualmente: documentos de titularidade, identificação e valor.',
+          'Bem sujeito a cláusula, legado ou disposição específica: documento que permita individualização suficiente do bem e do beneficiário.'
+        ],
+        tributos: [
+          'A lavratura de testamento ou revogação não substitui a análise tributária da futura sucessão.'
+        ],
+        atencao: [
+          'Conferir capacidade, manifestação livre de vontade e compreensão do testador.',
+          'Verificar legítima, herdeiros necessários e limites da parte disponível.',
+          'Evitar redação ambígua, disposições inexequíveis ou incompatíveis com a natureza do ato.'
+        ]
+      }
+    };
+
+    const extras = {
+      pessoaJuridica: [
+        'Contrato social, estatuto ou ato constitutivo atualizado.',
+        'Alterações contratuais, ata de eleição ou documento de representação vigente.',
+        'CNPJ e documentos dos administradores ou representantes.',
+        'Identificação dos sócios, administradores e beneficiário final, quando compatível com o ato.',
+        'Verificar poderes societários para alienar, adquirir, doar, garantir, confessar dívida ou assinar o ato pretendido.'
+      ],
+      procuracao: [
+        'Procuração pública ou instrumento aceito para o ato, com poderes específicos quando exigidos.',
+        'Documento de identificação do procurador.',
+        'Conferir validade, atualidade, revogação, substabelecimento, poderes de autocontratação e poderes para receber ou dar quitação, se houver.'
+      ],
+      estrangeiro: [
+        'Documento estrangeiro com legalização ou apostila, quando exigível.',
+        'Tradução pública juramentada, quando aplicável.',
+        'Registro em Registro de Títulos e Documentos, quando exigido para produção de efeitos perante terceiros.',
+        'CPF ou CNPJ no Brasil, quando necessário ao ato.'
+      ],
+      rural: [
+        'CCIR, ITR, CAR e documentos cadastrais do imóvel rural, conforme o caso.',
+        'Verificar georreferenciamento, fração mínima de parcelamento e restrições legais pertinentes.',
+        'Conferir eventual necessidade de anuência, autorização ou documento específico conforme localização e natureza do imóvel.'
+      ],
+      dominioUniao: [
+        'Domínio útil ou terreno da União: certidão da SPU quando houver transferência de domínio útil, benfeitorias ou cessão de direitos sobre terreno da União.',
+        'Enfiteuse privada: comprovante dos três últimos foros anuais, quando aplicável.'
+      ],
+      financiamento: [
+        'Contrato de financiamento, saldo devedor, autorização do credor ou minuta bancária, quando aplicável.',
+        'Conferir quitação, interveniência do credor, baixa de garantia ou constituição de nova garantia.',
+        'Verificar se há prazos, condições suspensivas, liberação de valores ou exigências do banco.'
+      ],
+      contaNotarial: [
+        'Definir valor a ser depositado, condição objetiva de liberação, beneficiário, prazo e vínculo com o negócio jurídico.',
+        'Informar dados das partes e regra objetiva para movimentação dos valores, observada a disciplina nacional da conta notarial vinculada.',
+        'Separar preço, sinal, arras, saldo, tributos, emolumentos e despesas externas, sem confundir valores da operação com emolumentos do ato.'
+      ],
+      tributo: [
+        'Identificar tributo aplicável, ente competente, base de cálculo, alíquota, guia e data de vencimento.',
+        'Verificar se o caso envolve imunidade, não incidência, isenção ou diferimento.',
+        'Guardar comprovante de recolhimento ou documento oficial que reconheça a dispensa.'
+      ],
+      atoEletronico: [
+        'Confirmar competência territorial para ato eletrônico ou híbrido antes do agendamento.',
+        'Prever videoconferência notarial para captação da vontade e concordância com os termos do ato.',
+        'Confirmar assinatura digital pelas partes no e-Notariado e assinatura do tabelião com certificado ICP-Brasil.',
+        'Em escrituras eletrônicas com imóvel, verificar circunscrição do imóvel, domicílio do adquirente e regras específicas de escolha do tabelionato.'
+      ],
+      menorIncapaz: [
+        'Verificar representação, assistência, autorização judicial, manifestação do Ministério Público ou regra especial aplicável ao ato.',
+        'Em divórcio consensual com filhos comuns menores ou incapazes, conferir prévia resolução judicial de guarda, convivência e alimentos.',
+        'Em inventário com interessado menor ou incapaz, verificar partilha em parte ideal, vedação a ato de disposição e manifestação favorável do Ministério Público, quando aplicável.',
+        'Em ata notarial que envolva dados pessoais de criança menor de 12 anos, exigir solicitação por um dos pais ou responsável legal e tratar o consentimento de forma específica e destacada.'
+      ],
+      pld: [
+        'Em ato com conteúdo econômico, manter cadastro dos envolvidos, representantes e procuradores, conforme política de PLD/FTP.',
+        'Registrar valores declarados, forma e meio de pagamento, datas relevantes e fontes das informações utilizadas na análise.',
+        'Identificar beneficiário final quando houver pessoa jurídica ou estrutura de representação, usando documentos disponíveis e bases admitidas.',
+        'Verificar pessoa exposta politicamente, familiares, estreitos colaboradores e listas de sanções para fins de monitoramento, sem inserir essa condição no ato notarial.',
+        'Havendo operação atípica, incompatível ou de difícil rastreabilidade, submeter à análise interna de PLD/FTP, preservado o sigilo legal.'
+      ],
+      lgpd: [
+        'Coletar apenas os dados necessários à triagem e à prática do ato, separando dados obrigatórios de dados usados só para contato operacional.',
+        'Evitar inserir dados sensíveis, imagens ou informações de terceiros sem necessidade concreta para o ato.',
+        'Tratar certidões, documentos pessoais, dados de menores e documentos societários conforme finalidade notarial e controles internos de privacidade.',
+        'Não usar esta triagem como repositório de documentos ou banco de dados. A conferência documental deve ocorrer pelos canais próprios da serventia.'
+      ]
+    };
+
+
+
+    const resolucao35 = {
+      geral: [
+        'Resolução CNJ 35/2007: para inventário, partilha, divórcio, declaração de separação de fato e extinção consensual de união estável por via administrativa, é livre a escolha do tabelião de notas, sem aplicação das regras de competência do Código de Processo Civil.',
+        'Resolução CNJ 35/2007: as escrituras desses atos não dependem de homologação judicial e são títulos hábeis para registro civil, registro imobiliário, transferência de bens, levantamento de valores e providências perante órgãos e instituições.',
+        'Resolução CNJ 35/2007: a pedido das partes, o tabelião pode emitir certidão ou traslado por quesitos, especificando apenas os bens, direitos e obrigações a que se pretenda dar publicidade.',
+        'Resolução CNJ 35/2007: é necessária a presença de advogado ou defensor público, com indicação de nome e registro na OAB, sendo vedada a indicação de advogado pelo tabelião.',
+        'Resolução CNJ 35/2007: a gratuidade depende de simples declaração dos interessados de que não possuem condições de arcar com os emolumentos, ainda que assistidos por advogado constituído.',
+        'Resolução CNJ 35/2007: é vedada a fixação de emolumentos em percentual incidente sobre o valor do negócio jurídico.',
+        'Resolução CNJ 35/2007: é desnecessário o registro das escrituras abrangidas pela resolução no Livro E do Registro Civil das Pessoas Naturais.'
+      ],
+      inventario: [
+        'Resolução CNJ 35/2007: é obrigatória a nomeação de interessado para representar o espólio, com poderes de inventariante, sem necessidade de seguir a ordem do art. 617 do Código de Processo Civil.',
+        'Resolução CNJ 35/2007: o meeiro e os herdeiros podem, em escritura pública anterior à partilha ou à adjudicação, nomear inventariante; essa nomeação é o termo inicial do procedimento de inventário extrajudicial.',
+        'Resolução CNJ 35/2007: o inventariante nomeado pode buscar informações bancárias e fiscais necessárias à conclusão de negócios essenciais ao inventário e levantar quantias para pagamento de despesas.',
+        'Resolução CNJ 35/2007: o recolhimento dos tributos incidentes deve anteceder a lavratura da escritura.',
+        'Resolução CNJ 35/2007: é possível inventário extrajudicial por cessionário de direitos hereditários, mesmo com cessão parcial do acervo, desde que todos os herdeiros estejam presentes e concordes.',
+        'Resolução CNJ 35/2007: os cônjuges dos herdeiros devem comparecer quando houver renúncia ou partilha que importe transmissão, salvo casamento sob separação absoluta.',
+        'Resolução CNJ 35/2007: o convivente sobrevivente é herdeiro se a união estável for reconhecida pelos demais sucessores ou, sendo único sucessor, se estiver previamente reconhecida por sentença judicial, escritura pública ou termo declaratório devidamente registrado.',
+        'Resolução CNJ 35/2007: a meação do convivente pode ser reconhecida na escritura se houver concordância de todos os herdeiros e interessados capazes ou se forem observadas as regras aplicáveis a menor ou incapaz.',
+        'Resolução CNJ 35/2007: a escritura deve qualificar as partes e respectivos cônjuges e conter qualificação completa do autor da herança, regime de bens, pacto antenupcial e dados do óbito.',
+        'Resolução CNJ 35/2007: devem ser apresentados certidão de óbito, documentos de identidade e CPF, certidões de parentesco, certidões de casamento, pacto antenupcial, certidão de propriedade dos imóveis, documentos dos bens móveis, certidão negativa de tributos e CCIR quando houver imóvel rural.',
+        'Resolução CNJ 35/2007: documentos apresentados devem ser originais ou cópias autenticadas; documentos de identidade das partes devem ser sempre originais.',
+        'Resolução CNJ 35/2007: é admissível inventário negativo, e a existência de credores do espólio não impede inventário, partilha ou adjudicação por escritura pública.',
+        'Resolução CNJ 35/2007: é vedada escritura pública de inventário e partilha referente a bens localizados no exterior.',
+        'Resolução CNJ 35/2007: a escritura pode ser lavrada a qualquer tempo, cabendo ao tabelião fiscalizar eventual multa tributária prevista na legislação estadual ou distrital.',
+        'Resolução CNJ 35/2007: o inventariante é responsável por declarar o valor dos bens do espólio, e o tabelião pode recusar a lavratura se houver fundados indícios de fraude, simulação ou dúvida sobre a declaração de vontade.'
+      ],
+      vendaInventariante: [
+        'Resolução CNJ 35/2007: o inventariante pode ser autorizado por escritura pública a alienar bens móveis ou imóveis do espólio, independentemente de autorização judicial, desde que observados os requisitos específicos do art. 11-A.',
+        'Resolução CNJ 35/2007: a alienação pelo inventariante exige discriminação das despesas do inventário, vinculação do preço ao pagamento dessas despesas, inexistência de indisponibilidade dos herdeiros ou do cônjuge ou convivente sobrevivente, menção às guias de impostos, indicação dos emolumentos estimados e prestação de garantia.',
+        'Resolução CNJ 35/2007: o prazo para pagamento das despesas do inventário não pode ser superior a um ano contado da venda, e o bem vendido deve ser relacionado no acervo para emolumentos, quinhões e imposto causa mortis, mas não será objeto de partilha.'
+      ],
+      menorInventario: [
+        'Resolução CNJ 35/2007: o inventário pode ser feito por escritura pública com interessado menor ou incapaz se o quinhão ou meação for pago em parte ideal em cada bem inventariado e houver manifestação favorável do Ministério Público.',
+        'Resolução CNJ 35/2007: nessa hipótese, é vedada a prática de atos de disposição relativos aos bens ou direitos do menor ou incapaz.',
+        'Resolução CNJ 35/2007: havendo nascituro do autor da herança, deve-se aguardar o registro de nascimento com indicação da parentalidade ou a comprovação de não nascimento com vida.',
+        'Resolução CNJ 35/2007: a eficácia da escritura depende da manifestação favorável do Ministério Público, e eventual impugnação pelo Ministério Público ou por terceiro interessado leva o procedimento ao juízo competente.'
+      ],
+      testamentoInventario: [
+        'Resolução CNJ 35/2007: é admitido inventário e partilha consensuais por escritura pública mesmo havendo testamento, desde que haja advogado, autorização expressa do juízo sucessório em ação de abertura e cumprimento de testamento válido e eficaz, sentença transitada em julgado e consenso dos interessados.',
+        'Resolução CNJ 35/2007: se houver menor ou incapaz, também devem ser observadas as exigências específicas de partilha em parte ideal, ausência de atos de disposição e manifestação favorável do Ministério Público.',
+        'Divergência de redação: Resolução CNJ 35/2007 prevê que, nos casos de testamento invalidado, revogado, rompido ou caduco, a invalidade ou ineficácia deve ter sido reconhecida por sentença judicial transitada em julgado na ação de abertura e cumprimento de testamento.',
+        'Resolução CNJ 35/2007: se o testamento contiver reconhecimento de filho ou outra declaração irrevogável, a escritura de inventário e partilha fica vedada e o inventário deve seguir obrigatoriamente pela via judicial.',
+        'Resolução CNJ 35/2007: havendo dúvida sobre cabimento do inventário e partilha consensual, o tabelião deve suscitá-la ao juízo competente em matéria de registros públicos.'
+      ],
+      sobrepartilha: [
+        'Resolução CNJ 35/2007: é admissível sobrepartilha por escritura pública, ainda que referente a inventário e partilha judiciais já findos.',
+        'Resolução CNJ 35/2007: a sobrepartilha é admissível mesmo que o herdeiro, hoje maior e capaz, fosse menor ou incapaz ao tempo do óbito ou do processo judicial.',
+        'Resolução CNJ 35/2007: na sobrepartilha, aplicar as cautelas do ato originário, incluindo advogado, tributos, documentos, consenso e eventual regra sobre menor, incapaz ou testamento.'
+      ],
+      nomeacaoInventariante: [
+        'Resolução CNJ 35/2007: a nomeação de inventariante pode ser feita por escritura pública anterior à partilha ou à adjudicação.',
+        'Resolução CNJ 35/2007: a nomeação de inventariante é considerada termo inicial do procedimento de inventário extrajudicial.',
+        'Resolução CNJ 35/2007: o inventariante nomeado pode representar o espólio na busca de informações bancárias e fiscais e no levantamento de quantias para pagamento das despesas necessárias.',
+        'Resolução CNJ 35/2007: a nomeação não substitui o inventário e não autoriza, por si só, atos de disposição patrimonial fora das hipóteses e requisitos próprios da resolução.'
+      ],
+      divorcioExtincao: [
+        'Resolução CNJ 35/2007: para divórcio consensual, devem ser apresentados certidão de casamento, documento de identidade e CPF, pacto antenupcial, certidão de nascimento ou outro documento oficial dos filhos, certidão de propriedade dos imóveis e documentos dos bens móveis e direitos.',
+        'Resolução CNJ 35/2007: as partes devem declarar que não têm filhos comuns ou, havendo, indicar nomes, datas de nascimento e se existem incapazes.',
+        'Resolução CNJ 35/2007: as partes devem declarar que o cônjuge virago não se encontra em estado gravídico ou que não têm conhecimento dessa condição.',
+        'Resolução CNJ 35/2007: havendo filhos comuns menores ou incapazes, a escritura é permitida se houver prévia resolução judicial de guarda, visitação e alimentos, com consignação no corpo da escritura.',
+        'Resolução CNJ 35/2007: a escritura deve conter declaração de ciência das consequências do divórcio, firme propósito de dissolução, recusa de reconciliação e concordância com a regulamentação judicial dos interesses dos filhos menores ou incapazes.',
+        'Resolução CNJ 35/2007: a representação por mandatário exige instrumento público, poderes especiais, descrição das cláusulas essenciais e prazo de validade de 30 dias.',
+        'Resolução CNJ 35/2007: havendo bens, deve-se distinguir patrimônio individual e patrimônio comum conforme o regime de bens.',
+        'Resolução CNJ 35/2007: transmissão de patrimônio individual ou partilha desigual exige comprovação do recolhimento do tributo sobre a fração transferida.',
+        'Resolução CNJ 35/2007: a partilha em divórcio consensual segue, no que couber, as regras da partilha em inventário extrajudicial.',
+        'Resolução CNJ 35/2007: o traslado deve ser apresentado ao Registro Civil para averbação, sem autorização judicial e sem audiência do Ministério Público.',
+        'Resolução CNJ 35/2007: não há sigilo na escritura pública de divórcio consensual.',
+        'Resolução CNJ 35/2007: é admissível retificação consensual das cláusulas de obrigações alimentares ajustadas no divórcio.',
+        'Resolução CNJ 35/2007: o tabelião pode recusar a lavratura se houver fundados indícios de prejuízo a um dos cônjuges ou dúvida sobre a declaração de vontade.',
+        'Resolução CNJ 35/2007: as disposições sobre divórcio consensual aplicam-se, no que couber, à extinção consensual da união estável.'
+      ],
+      uniaoEstavel: [
+        'Resolução CNJ 35/2007: a resolução disciplina expressamente a extinção consensual da união estável por via administrativa, aplicando-se, no que couber, as regras do divórcio consensual.',
+        'Resolução CNJ 35/2007: a escritura de reconhecimento ou declaração de união estável não se confunde com a escritura de extinção consensual de união estável e pode exigir cautelas próprias do Código Nacional de Normas e da legislação civil.'
+      ],
+      separacaoFato: [
+        'Resolução CNJ 35/2007: a declaração de separação de fato consensual deve se ater exclusivamente ao fato de que cessou a comunhão plena de vida entre o casal.',
+        'Resolução CNJ 35/2007: para separação de fato consensual, devem ser apresentados certidão de casamento, documento de identidade e CPF, manifestação de vontade espontânea e isenta de vícios, pacto antenupcial, documentos dos filhos, documentos dos bens e declaração de inexistência de gravidez ou desconhecimento dessa condição.',
+        'Resolução CNJ 35/2007: o restabelecimento da comunhão plena de vida pode ser feito por escritura pública, com anotação ou comunicação ao juízo quando cabível, e não altera os termos da sociedade conjugal.'
+      ]
+    };
+
+    const spNormas = {
+      geral: [
+        'São Paulo: antes da lavratura, conferir documentos originais de identificação, CPF ou CNPJ e certidão de casamento, quando aplicável.',
+        'São Paulo: em pessoa jurídica, exigir ato constitutivo, alterações ou consolidação, com certidão do RTD/RCPJ com prazo não superior a um ano, ou ficha cadastral da Junta Comercial obtida pela internet.',
+        'São Paulo: procurações usadas no ato devem ser conferidas quanto à forma, poderes, qualificação das partes, sinal público e certidão expedida nos 90 dias anteriores ao ato.',
+        'São Paulo: nos atos que dependam de autorização judicial para dispor ou adquirir bens imóveis ou direitos, exigir o respectivo alvará, inclusive para espólio, massa falida, herança jacente ou vacante, recuperação judicial, incapazes e sub-rogação de gravames.',
+        'São Paulo: se houver curatela ou decisão apoiada em ato patrimonial ou negocial, exigir alvará, termo de curatela ou termo de acordo de decisão apoiada, conforme o caso.',
+        'São Paulo: o tabelião é responsável pela redação e pelo conteúdo jurídico do ato, sendo vedada a expressão sob minuta ou equivalente no instrumento.'
+      ],
+      imovel: [
+        'São Paulo: em ato sobre imóvel, direito real ou quotas de sociedade simples, consultar previamente a CNIB e consignar no ato o resultado e o hash da pesquisa.',
+        'São Paulo: nas escrituras de imóveis, exigir certidão atualizada do Registro de Imóveis, ações reais e pessoais reipersecutórias e ônus reais, com validade de 30 dias.',
+        'São Paulo: as certidões dos distribuidores estadual, federal e trabalhista podem ser apresentadas ou expressamente dispensadas pelo adquirente, com declaração do alienante sobre inexistência de ônus e ações.',
+        'São Paulo: prova de quitação de tributos municipais pode ser dispensada expressamente pelo adquirente, com assunção da responsabilidade por débitos fiscais existentes.',
+        'São Paulo: a escritura deve indicar o valor do negócio, o valor atribuído pela Fazenda e o recolhimento do imposto de transmissão, ou mencionar imunidade ou isenção.',
+        'São Paulo: quando houver pacto antenupcial relacionado ao imóvel, mencionar o pacto, seus ajustes e o número do registro no Registro de Imóveis; se não registrado, mencionar a necessidade de registro antes da alienação ou oneração.',
+        'São Paulo: cientificar as partes sobre a possibilidade de obtenção da CNDT em alienação ou oneração de imóvel e em partilha de bens imóveis decorrente de separação, divórcio ou união estável.'
+      ],
+      rural: [
+        'São Paulo: em imóvel rural, mencionar CCIR, cadastro da Receita Federal, prova de quitação do ITR dos últimos cinco anos e, se cabível, autorização do INCRA para desmembramento.',
+        'São Paulo: o tabelião não deve lavrar desmembramento rural se a área desmembrada e a remanescente forem inferiores à fração mínima de parcelamento, salvo hipóteses normativas específicas.',
+        'São Paulo: aquisição de imóvel rural por estrangeiro exige análise própria das restrições da Lei 5.709/1971 e do Decreto 74.965/1974, inclusive residência, módulos, autorização do INCRA e limites municipais.'
+      ],
+      estrangeiro: [
+        'São Paulo: procuração de origem estrangeira usada no ato deve ter referência ao livro e à folha do Registro de Títulos e Documentos em que foi trasladada, com a respectiva tradução quando necessária.',
+        'São Paulo: documento em língua estrangeira ou comparecente que não saiba a língua nacional exige cautela com tradutor público ou pessoa idônea aceita pelo tabelião, com menção no ato.'
+      ],
+      procuracao: [
+        'São Paulo: procuração para ato que exige instrumento público também deve revestir forma pública.',
+        'São Paulo: em procurações de pessoas idosas, recomenda-se prazo não superior a um ano quando houver risco concreto de comprometimento patrimonial, com poderes específicos e sem cláusula de irrevogabilidade, salvo negócio bilateral ou interesse exclusivo do outorgante.',
+        'São Paulo: quando advogado figurar como outorgado, constar número de inscrição; se a outorgada for sociedade de advogados, constar os advogados integrantes.',
+        'São Paulo: substabelecimento, renúncia e revogação de procuração devem observar apresentação dos instrumentos, arquivamento e remissões recíprocas quando não lavrados nas próprias notas.'
+      ],
+      divorcio: [
+        'São Paulo: exigir certidão de casamento, documentos de identidade e CPF, pacto antenupcial, certidões dos filhos capazes e documentos dos bens e direitos.',
+        'São Paulo: as partes devem declarar que não têm filhos comuns ou, havendo, que são absolutamente capazes, com nomes e datas de nascimento.',
+        'São Paulo: as partes também devem declarar que o cônjuge virago não se encontra em estado gravídico ou que não têm conhecimento dessa condição.',
+        'São Paulo: havendo filhos menores, a escritura é possível se comprovada a resolução judicial prévia de guarda, convivência e alimentos.',
+        'São Paulo: se houver representação por procuração, o instrumento público deve ter poderes especiais, cláusulas essenciais e validade de 30 dias; procuração lavrada no exterior, registrada em RTD e traduzida quando necessário, pode ter validade de até 90 dias.',
+        'São Paulo: é vedada a acumulação das funções de procurador e advogado das partes.',
+        'São Paulo: havendo transmissão patrimonial individual ou partilha desigual, comprovar o recolhimento do tributo sobre a fração transferida.'
+      ],
+      inventario: [
+        'São Paulo: é obrigatória a nomeação de inventariante extrajudicial na escritura de inventário e partilha, podendo haver escritura autônoma para reunir documentos, recolher tributos e cumprir obrigações do espólio.',
+        'São Paulo: o recolhimento dos tributos incidentes deve anteceder a lavratura da escritura, com observância das normas da Fazenda Estadual.',
+        'São Paulo: arquivar certidão ou documento fiscal que comprove a regularidade do imposto e fazer indicação expressa na escritura.',
+        'São Paulo: cônjuges dos herdeiros devem comparecer quando houver renúncia ou partilha que importe transmissão, salvo casamento sob separação absoluta.',
+        'São Paulo: companheiro com direito à sucessão é parte; se não houver outro sucessor ou se não houver consenso sobre o reconhecimento da união estável, há necessidade de ação judicial.',
+        'São Paulo: a meação de companheiro pode ser reconhecida por escritura se todos os herdeiros e interessados forem absolutamente capazes e concordes.',
+        'São Paulo: certidões positivas fiscais municipais ou federais impedem a lavratura do inventário, salvo certidão positiva com efeitos de negativa ou regularidade aceita pela norma aplicável.',
+        'São Paulo: os documentos devem ser originais ou cópias autenticadas, mas os documentos de identidade das partes devem ser sempre originais.',
+        'São Paulo: é vedada escritura de inventário e partilha referente a bens localizados no exterior.',
+        'São Paulo: inventário com testamento exige autorização expressa do juízo sucessório; também se admite escritura quando o testamento estiver revogado, caduco ou declarado inválido por decisão transitada em julgado, desde que não haja disposição irrevogável, como reconhecimento de filho.'
+      ],
+      ata: [
+        'São Paulo: ata notarial é narração objetiva, fiel e detalhada de fatos jurídicos presenciados ou verificados pessoalmente pelo tabelião.',
+        'São Paulo: a ata deve conter local, data e hora da lavratura, e, se diversa, a hora em que os fatos foram presenciados ou verificados.',
+        'São Paulo: a ata deve conter nome e qualificação do solicitante, narração circunstanciada, declaração de leitura e assinatura e sinal público do tabelião.',
+        'São Paulo: os documentos apresentados para a lavratura da ata devem ser arquivados em classificador próprio.',
+        'São Paulo: a ata pode conter assinatura do solicitante e testemunhas, ser redigida em locais, datas e horas diferentes, conter laudos técnicos, imagens e documentos em cores.',
+        'São Paulo: o tabelião deve recusar o ato se o solicitante pedir atuação contra a moral, a ética, os costumes e a lei, mas é possível lavrar ata quando o objeto narrado constitui fato ilícito.'
+      ],
+      usucapiao: [
+        'São Paulo: na ata para usucapião, além do tempo de posse, podem constar declaração de inexistência de ação possessória ou reivindicatória, declarações sobre tempo de posse e relação dos documentos apresentados.',
+        'São Paulo: a ata de usucapião observa a circunscrição territorial do tabelião; se houver diligência, respeitar o município da delegação e consignar o local da prática.',
+        'São Paulo: a ata de usucapião não confirma propriedade e deve permanecer como instrumento de constatação e instrução do procedimento registral.'
+      ],
+      pacto: [
+        'São Paulo: quando o pacto antenupcial influenciar ato imobiliário posterior, a escritura deve mencionar o pacto e seu registro no Registro de Imóveis, ou a necessidade de registro antes da alienação ou oneração.',
+        'São Paulo: convém orientar expressamente sobre registro do pacto para eficácia perante terceiros.'
+      ],
+      testamento: [
+        'São Paulo: em testamento público com disposição em favor de pessoa jurídica altruística, científica, artística, beneficente, religiosa, educativa, cultural, política, esportiva ou recreativa, consultar o testador sobre a conveniência de cientificação por escrito.',
+        'São Paulo: a mesma consulta deve ser feita em escritura de revogação de testamento ou de cláusula testamentária favorável a essas pessoas jurídicas.'
+      ],
+      uniaoEstavel: [
+        'São Paulo: na escritura de união estável, conferir estado civil, qualificação completa, regime patrimonial adotado e declaração de inexistência de impedimento informado pelas partes.',
+        'São Paulo: se houver extinção de união estável, aplicar as cautelas locais de dissolução consensual, partilha, advogado, filhos, gravidez e tributos, conforme o caso.'
+      ],
+      sobrepartilha: [
+        'São Paulo: na sobrepartilha extrajudicial, observar as cautelas aplicáveis ao inventário, divórcio ou extinção de união estável que originou a partilha anterior.',
+        'São Paulo: verificar recolhimento prévio de tributos, certidões fiscais, documentos originais, consenso dos interessados e eventual necessidade de autorização judicial.'
+      ],
+      dacaoPagamento: [
+        'São Paulo: se a dação envolver imóvel, aplicar as cautelas locais de escritura imobiliária, incluindo certidão atualizada, CNIB, tributo de transmissão, valor do negócio e documentos fiscais.',
+        'São Paulo: em dação vinculada à quitação de dívida, separar obrigação, forma de pagamento, quitação e eventual garantia, com atenção à origem dos valores e à política de PLD/FTP.'
+      ],
+      nomeacaoInventariante: [
+        'São Paulo: admite-se escritura autônoma de nomeação de inventariante para reunir documentos, recolher tributos e cumprir obrigações do espólio antes da partilha.',
+        'São Paulo: a nomeação de inventariante não substitui a escritura de inventário e partilha nem dispensa a observância das regras locais sobre testamento, incapazes, tributos e certidões.'
+      ],
+      confissaoDivida: [
+        'São Paulo: em confissão de dívida com garantia imobiliária, aplicar as cautelas locais de escritura imobiliária, CNIB, certidão atualizada, qualificação, anuências e documentos fiscais.',
+        'São Paulo: a ferramenta não localizou disciplina estadual específica para confissão de dívida simples nas NSCGJ consultadas. Aplicar as cautelas gerais de qualificação, representação, PLD/FTP e legislação material aplicável.'
+      ],
+      contaNotarial: [
+        'São Paulo: a ferramenta não localizou disciplina estadual específica de conta notarial vinculada nas NSCGJ consultadas. Aplicar a norma nacional e a rotina local da serventia, sem confundir valores da operação com emolumentos ou despesas externas.'
+      ],
+      eletronico: [
+        'São Paulo: atos notariais digitais ou eletrônicos devem observar os itens pertinentes do Capítulo XIV, além das regras nacionais do e-Notariado.'
+      ],
+      adjudicacao: [
+        'São Paulo: não foi localizada regra estadual específica sobre ata notarial para adjudicação compulsória extrajudicial nas NSCGJ consultadas. Mantida a base nacional e as cautelas gerais paulistas sobre ata, imóveis, CNIB, qualificação e documentos originais.'
+      ]
+    };
+
+
+
+    const spDivergencias = {
+      geralResolucao35: [
+        'Diferença de procedimento: a Resolução CNJ 35/2007 prevê gratuidade mediante simples declaração dos interessados; em São Paulo, se houver suspeita motivada sobre a verossimilhança da declaração, o tabelião comunica o fato ao Juiz Corregedor Permanente.',
+        'Diferença de procedimento: a Resolução CNJ 35/2007 dispensa o registro das escrituras no Livro E e determina concentração estadual de dados; em São Paulo, há remessa quinzenal à CENSEC/CNB-CF e ao SIGNO/CNB-SP das escrituras de separação, divórcio, inventário e partilha, inclusive informação negativa.'
+      ],
+      inventario: [
+        'Divergência de redação: a Resolução CNJ 35/2007 exige que, nos casos de testamento invalidado, revogado, rompido ou caduco, a invalidade ou ineficácia seja reconhecida por sentença judicial transitada em julgado na ação de abertura e cumprimento de testamento; as Normas de São Paulo mencionam testamento revogado ou caduco e decisão transitada para invalidade, sem reproduzir a mesma redação nacional sobre testamento rompido e reconhecimento judicial da ineficácia.',
+        'Diferença de procedimento: a Resolução CNJ 35/2007 prevê submissão ao juízo competente em caso de impugnação do Ministério Público ou de terceiro no inventário com menor ou incapaz; em São Paulo, as Normas direcionam o procedimento ao Juiz Corregedor Permanente da unidade extrajudicial.',
+        'Diferença de procedimento: a Resolução CNJ 35/2007 admite inventário por cessionário de direitos hereditários, mesmo em cessão parcial, desde que todos os herdeiros estejam presentes e concordes; em São Paulo, na cessão integral do acervo, as Normas dispensam a presença e concordância dos herdeiros cedentes.',
+        'Diferença de procedimento: a Resolução CNJ 35/2007 permite a nomeação de inventariante por escritura anterior; em São Paulo, a escritura autônoma de nomeação exige os documentos previstos no item próprio das Normas locais.',
+        'Diferença de procedimento: na pendência de inventário judicial, São Paulo exige comprovação do deferimento do pedido de desistência ou suspensão do processo com a finalidade específica de lavrar escritura de inventário e partilha.',
+        'Diferença de procedimento: no inventário extrajudicial de falecido estrangeiro com bens situados no Brasil, São Paulo exige certidão consular sobre teor e vigência da lei aplicável à época do óbito.'
+      ],
+      divorcio: [
+        'Diferença de procedimento: a Resolução CNJ 35/2007 exige procuração pública com poderes especiais, cláusulas essenciais e prazo de 30 dias para divórcio consensual por mandatário; São Paulo admite prazo de até 90 dias para procuração lavrada no exterior, desde que registrada em Registro de Títulos e Documentos e acompanhada de tradução quando necessária.',
+        'Diferença de procedimento: São Paulo exige que o tabelião disponibilize sala ou ambiente reservado e discreto para atendimento das partes em divórcio consensual, cautela operacional não detalhada na Resolução CNJ 35/2007.',
+        'Diferença de procedimento: São Paulo admite que, no divórcio consensual, as partes optem por partilhar os bens e resolver pensão alimentícia posteriormente, ponto tratado expressamente nas Normas locais.'
+      ],
+      uniaoEstavel: [
+        'Diferença de procedimento: a Resolução CNJ 35/2007 aplica as regras do divórcio, no que couber, à extinção consensual de união estável; a disciplina nacional registral complementa o tema ao tratar do registro da união estável, da dissolução e da indicação das datas de início e fim no Livro E.'
+      ],
+      sobrepartilha: [
+        'Diferença de procedimento: a Resolução CNJ 35/2007 admite sobrepartilha por escritura pública; São Paulo acrescenta cautela de menção expressa de que ficam ressalvados eventuais erros, omissões ou direitos de terceiros.'
+      ],
+      nomeacaoInventariante: [
+        'Diferença de procedimento: a Resolução CNJ 35/2007 permite a escritura prévia de nomeação de inventariante; São Paulo detalha que a nomeação pode servir para reunir documentos, recolher tributos, cumprir obrigações do espólio, levantar valores e viabilizar a lavratura do inventário.'
+      ],
+      separacaoFato: [
+        'Diferença de procedimento: a Resolução CNJ 35/2007 disciplina a declaração de separação de fato consensual; São Paulo replica o instituto e acrescenta regras de anotação e comunicação do restabelecimento conforme a serventia de origem ou o juízo que tenha proferido decisão.'
+      ]
+    };
+
+    const form = document.getElementById('triagemForm');
+    const resultado = document.getElementById('resultado');
+    const emptyState = document.getElementById('emptyState');
+    const resultadoTitulo = document.getElementById('resultadoTitulo');
+    const resultadoSubtitulo = document.getElementById('resultadoSubtitulo');
+    const resultadoSecoes = document.getElementById('resultadoSecoes');
+    const textoCopiavel = document.getElementById('textoCopiavel');
+    const toast = document.getElementById('toast');
+
+    function obterSelecionados() {
+      return {
+        ato: document.getElementById('ato').value,
+        nomeCaso: '',
+        temImovel: document.getElementById('temImovel').checked,
+        imovelRural: document.getElementById('imovelRural').checked,
+        dominioUniao: document.getElementById('dominioUniao').checked,
+        temPJ: document.getElementById('temPJ').checked,
+        temProcuracao: document.getElementById('temProcuracao').checked,
+        temEstrangeiro: document.getElementById('temEstrangeiro').checked,
+        temFinanciamento: document.getElementById('temFinanciamento').checked,
+        temContaNotarial: document.getElementById('temContaNotarial').checked,
+        temTributo: document.getElementById('temTributo').checked,
+        conteudoEconomico: document.getElementById('conteudoEconomico').checked,
+        atoEletronico: document.getElementById('atoEletronico').checked,
+        haMenorOuIncapaz: document.getElementById('haMenorOuIncapaz').checked,
+        observacoes: document.getElementById('observacoes').value.trim()
+      };
+    }
+
+
+    function limparDuplicados(lista) {
+      return [...new Set(lista.filter(Boolean))];
+    }
+
+    function criarSecao(titulo, itens, classe = '', aplicarLinksDocumentais = false) {
+      if (!itens || itens.length === 0) return '';
+      const lis = itens.map(item => `<li>${aplicarLinksDocumentais ? linkificarTextoDocumental(item) : escapeHtml(item)}</li>`).join('');
+      return `
+        <div class="section ${classe}">
+          <h3>${escapeHtml(titulo)}</h3>
+          <ul>${lis}</ul>
+        </div>
+      `;
+    }
+
+    function criarSecaoAgrupada(titulo, grupos, classe = '', aplicarLinksDocumentais = false) {
+      if (!grupos || grupos.length === 0) return '';
+      const conteudo = grupos
+        .filter(grupo => grupo.itens && grupo.itens.length > 0)
+        .map(grupo => {
+          const tituloDivergencia = /^Divergências|^Diferenças/i.test(grupo.titulo || '');
+          const lis = grupo.itens.map(item => {
+            const texto = String(item);
+            const divergencia = /^Divergência|^Diferença/i.test(texto);
+            return `<li class="${divergencia ? 'divergencia-item' : ''}">${aplicarLinksDocumentais ? linkificarTextoDocumental(texto) : escapeHtml(texto)}</li>`;
+          }).join('');
+          return `
+            <h4 class="group-title ${tituloDivergencia ? 'divergencia-title' : ''}">${escapeHtml(grupo.titulo)}</h4>
+            <ul class="grouped-list">${lis}</ul>
+          `;
+        })
+        .join('');
+
+      if (!conteudo) return '';
+
+      return `
+        <div class="section ${classe}">
+          <h3>${escapeHtml(titulo)}</h3>
+          ${conteudo}
+        </div>
+      `;
+    }
+
+    function adicionarGrupo(grupos, titulo, itens) {
+      const lista = limparDuplicados(itens || []);
+      if (lista.length) grupos.push({ titulo, itens: lista });
+    }
+
+    function itensDosGrupos(grupos) {
+      return limparDuplicados((grupos || []).flatMap(grupo => grupo.itens || []));
+    }
+
+    const linksDocumentais = [
+      {
+        termos: ['CPF/MF', 'CPF'],
+        url: 'https://servicos.receita.fazenda.gov.br/servicos/cpf/consultasituacao/consultapublica.asp'
+      },
+      {
+        termos: ['certidões de nascimento, casamento e óbito', 'certidão de casamento', 'certidão de nascimento', 'certidão de óbito', 'certidões de nascimento', 'certidões de casamento'],
+        url: 'https://home.registrocivil.org.br/'
+      },
+      {
+        termos: ['pacto antenupcial', 'registro do pacto'],
+        url: 'https://ridigital.org.br/'
+      },
+      {
+        termos: ['procuração pública', 'substabelecimento'],
+        url: 'https://buscacep.org.br/'
+      },
+      {
+        termos: ['certidão negativa de testamento', 'certidão de testamento', 'Registro Central de Testamentos On-Line', 'RCTO'],
+        url: 'https://www.buscatestamento.org.br/CertidaoOnline/SolicitacaoTestamento.aspx'
+      },
+      {
+        termos: ['CENSEC'],
+        url: 'https://www.censec.org.br/'
+      },
+      {
+        termos: ['certidão de ações reais e pessoais reipersecutórias', 'ações reais e pessoais reipersecutórias', 'certidão de ônus reais', 'ônus reais', 'certidão atualizada da matrícula', 'certidão de propriedade de bens imóveis', 'matrícula', 'transcrição', 'Registro de Imóveis'],
+        url: 'https://ridigital.org.br/'
+      },
+      {
+        termos: ['certidão de dados cadastrais'],
+        url: 'https://prefeitura.sp.gov.br/web/fazenda/servicos/certidoes/'
+      },
+      {
+        termos: ['certidão de tributos imobiliários', 'certidão de débitos de tributos imobiliários', 'prova de quitação dos tributos municipais', 'tributos municipais'],
+        url: 'https://duc.prefeitura.sp.gov.br/certidoes/forms_anonimo/frmConsultaEmissaoCertificado.aspx'
+      },
+      {
+        termos: ['carnê de IPTU', 'IPTU'],
+        url: 'https://iptu.prefeitura.sp.gov.br/'
+      },
+      {
+        termos: ['guia do ITBI', 'ITBI'],
+        url: 'https://itbi.prefeitura.sp.gov.br/forms/frm_sql.aspx?tipo=SQL#/'
+      },
+      {
+        termos: ['ITCMD'],
+        url: 'https://www10.fazenda.sp.gov.br/ITCMD_DEC/Default.aspx'
+      },
+      {
+        termos: ['Justiça Estadual'],
+        url: 'https://www.tjsp.jus.br/Certidoes/Certidoes/CertidoesPrimeiraInstancia'
+      },
+      {
+        termos: ['Justiça Federal'],
+        url: 'https://www.jfsp.jus.br/servicos-judiciais/certidoes/'
+      },
+      {
+        termos: ['Justiça Trabalhista', 'CNDT', 'certidão trabalhista'],
+        url: 'https://cndt-certidao.tst.jus.br/inicio.faces'
+      },
+      {
+        termos: ['Receita Federal'],
+        url: 'https://servicos.receitafederal.gov.br/servico/certidoes/#/home'
+      },
+      {
+        termos: ['CCIR'],
+        url: 'https://sncr.serpro.gov.br/ccir/emissao'
+      },
+      {
+        termos: ['CAR'],
+        url: 'https://www.car.gov.br/#/consultar'
+      },
+      {
+        termos: ['ITR'],
+        url: 'https://servicos.receitafederal.gov.br/servico/certidoes/#/home'
+      },
+      {
+        termos: ['SPU', 'terreno da União', 'domínio útil'],
+        url: 'https://sistema.patrimoniodetodos.gov.br/'
+      },
+      {
+        termos: ['JUCESP'],
+        url: 'https://portalfacilitasp.sp.gov.br/facilitasp'
+      },
+      {
+        termos: ['indisponibilidade'],
+        url: 'https://indisponibilidade.onr.org.br/'
+      }
+    ];
+
+    function regrasDocumentaisOrdenadas() {
+      return linksDocumentais
+        .flatMap(regra => regra.termos.map(termo => ({ termo, url: regra.url })))
+        .sort((a, b) => b.termo.length - a.termo.length);
+    }
+
+    function linkificarTextoDocumental(texto) {
+      const original = String(texto);
+      const lower = original.toLowerCase();
+      const candidatos = [];
+
+      regrasDocumentaisOrdenadas().forEach(regra => {
+        const termoLower = regra.termo.toLowerCase();
+        let pos = lower.indexOf(termoLower);
+        while (pos !== -1) {
+          candidatos.push({ start: pos, end: pos + termoLower.length, url: regra.url });
+          pos = lower.indexOf(termoLower, pos + termoLower.length);
+        }
+      });
+
+      candidatos.sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
+      const selecionados = [];
+      let limite = 0;
+      candidatos.forEach(candidato => {
+        if (candidato.start >= limite) {
+          selecionados.push(candidato);
+          limite = candidato.end;
+        }
+      });
+
+      if (!selecionados.length) return escapeHtml(original);
+
+      let html = '';
+      let cursor = 0;
+      selecionados.forEach(match => {
+        html += escapeHtml(original.slice(cursor, match.start));
+        html += `<a class="doc-link" href="${escapeHtml(match.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(original.slice(match.start, match.end))}</a>`;
+        cursor = match.end;
+      });
+      html += escapeHtml(original.slice(cursor));
+      return html;
+    }
+
+    function escapeHtml(texto) {
+      return String(texto)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function montarTriagem() {
+      const s = obterSelecionados();
+      const ato = dadosAtos[s.ato];
+      if (!ato) return null;
+
+      let documentos = [...ato.documentos];
+      let imovel = s.temImovel ? [...ato.imovel] : [];
+      let tributos = [...ato.tributos];
+      let atencao = [...ato.atencao];
+      let complementaresGrupos = [];
+      let conformidadeGrupos = [];
+      let saoPauloGrupos = [];
+
+
+      adicionarGrupo(saoPauloGrupos, 'Cautelas gerais de São Paulo', spNormas.geral);
+
+      if (s.temPJ) {
+        adicionarGrupo(complementaresGrupos, 'Há pessoa jurídica', extras.pessoaJuridica);
+      }
+      if (s.temProcuracao) {
+        adicionarGrupo(complementaresGrupos, 'Há procuração ou representante', extras.procuracao);
+      }
+      if (s.temEstrangeiro) {
+        adicionarGrupo(complementaresGrupos, 'Há pessoa estrangeira ou documento estrangeiro', extras.estrangeiro);
+        adicionarGrupo(saoPauloGrupos, 'Há pessoa estrangeira ou documento estrangeiro', spNormas.estrangeiro);
+      }
+      if (s.imovelRural) {
+        adicionarGrupo(complementaresGrupos, 'Imóvel rural', extras.rural);
+        adicionarGrupo(saoPauloGrupos, 'Imóvel rural', spNormas.rural);
+      }
+      if (s.dominioUniao) {
+        adicionarGrupo(complementaresGrupos, 'Domínio útil ou terreno da União', extras.dominioUniao);
+      }
+      if (s.temFinanciamento) {
+        adicionarGrupo(complementaresGrupos, 'Há financiamento, saldo devedor ou garantia', extras.financiamento);
+      }
+      if (s.temContaNotarial) {
+        adicionarGrupo(complementaresGrupos, 'Pretende usar conta notarial', extras.contaNotarial);
+        adicionarGrupo(saoPauloGrupos, 'Pretende usar conta notarial', spNormas.contaNotarial);
+      }
+      if (s.temTributo) {
+        adicionarGrupo(complementaresGrupos, 'Exige análise de imposto, guia ou isenção', extras.tributo);
+      }
+      if (s.atoEletronico) {
+        adicionarGrupo(conformidadeGrupos, 'Ato eletrônico ou híbrido pelo e-Notariado', extras.atoEletronico);
+        adicionarGrupo(saoPauloGrupos, 'Ato eletrônico ou híbrido pelo e-Notariado', spNormas.eletronico);
+      }
+      if (s.haMenorOuIncapaz) {
+        adicionarGrupo(conformidadeGrupos, 'Há menor, incapaz ou dados de criança/adolescente', extras.menorIncapaz);
+      }
+
+      if (s.conteudoEconomico) {
+        adicionarGrupo(conformidadeGrupos, 'Conformidade UIF (COAF)', extras.pld);
+      }
+      adicionarGrupo(conformidadeGrupos, 'Privacidade e tratamento local de dados', extras.lgpd);
+
+      if (['inventario','sobrepartilha','divorcio','nomeacaoInventariante'].includes(s.ato)) {
+        adicionarGrupo(conformidadeGrupos, 'Resolução CNJ 35/2007: disposições gerais', resolucao35.geral);
+        adicionarGrupo(saoPauloGrupos, 'Diferenças de procedimento com a Resolução CNJ 35/2007', spDivergencias.geralResolucao35);
+      }
+      if (s.ato === 'inventario') {
+        adicionarGrupo(conformidadeGrupos, 'Resolução CNJ 35/2007: inventário e partilha', resolucao35.inventario);
+        adicionarGrupo(conformidadeGrupos, 'Resolução CNJ 35/2007: inventário com testamento', resolucao35.testamentoInventario);
+      }
+      if (s.ato === 'sobrepartilha') {
+        adicionarGrupo(conformidadeGrupos, 'Resolução CNJ 35/2007: sobrepartilha', resolucao35.sobrepartilha);
+      }
+      if (s.ato === 'nomeacaoInventariante') {
+        adicionarGrupo(conformidadeGrupos, 'Resolução CNJ 35/2007: nomeação de inventariante', resolucao35.nomeacaoInventariante);
+      }
+      if (s.ato === 'divorcio') {
+        adicionarGrupo(conformidadeGrupos, 'Resolução CNJ 35/2007: divórcio e extinção consensual de união estável', resolucao35.divorcioExtincao);
+        adicionarGrupo(conformidadeGrupos, 'Resolução CNJ 35/2007: declaração de separação de fato e restabelecimento', resolucao35.separacaoFato);
+      }
+      if (s.ato === 'uniaoEstavel') {
+        adicionarGrupo(conformidadeGrupos, 'Resolução CNJ 35/2007: união estável', resolucao35.uniaoEstavel);
+      }
+      if (s.haMenorOuIncapaz && ['inventario','sobrepartilha','nomeacaoInventariante'].includes(s.ato)) {
+        adicionarGrupo(conformidadeGrupos, 'Resolução CNJ 35/2007: menor, incapaz ou nascituro no inventário', resolucao35.menorInventario);
+      }
+      if (s.temImovel && ['inventario','nomeacaoInventariante'].includes(s.ato)) {
+        adicionarGrupo(conformidadeGrupos, 'Resolução CNJ 35/2007: autorização de venda por inventariante', resolucao35.vendaInventariante);
+      }
+
+      if (s.temImovel) {
+        adicionarGrupo(saoPauloGrupos, 'Envolve imóvel', spNormas.imovel);
+      }
+
+      if (s.temProcuracao || s.ato === 'procuracao') {
+        adicionarGrupo(
+          saoPauloGrupos,
+          s.ato === 'procuracao' ? 'Tipo de ato: procuração pública' : 'Há procuração ou representante',
+          spNormas.procuracao
+        );
+      }
+
+      if (s.ato === 'uniaoEstavel') {
+        adicionarGrupo(saoPauloGrupos, 'Tipo de ato: união estável', spNormas.uniaoEstavel);
+        adicionarGrupo(saoPauloGrupos, 'Diferenças de procedimento: união estável', spDivergencias.uniaoEstavel);
+      }
+      if (s.ato === 'sobrepartilha') {
+        adicionarGrupo(saoPauloGrupos, 'Tipo de ato: sobrepartilha', spNormas.sobrepartilha);
+        adicionarGrupo(saoPauloGrupos, 'Diferenças de procedimento: sobrepartilha', spDivergencias.sobrepartilha);
+        adicionarGrupo(saoPauloGrupos, 'Diferenças de procedimento: inventário', spDivergencias.inventario);
+      }
+      if (s.ato === 'divorcio') {
+        adicionarGrupo(saoPauloGrupos, 'Tipo de ato: divórcio e extinção de união estável', spNormas.divorcio);
+        adicionarGrupo(saoPauloGrupos, 'Diferenças de procedimento: divórcio e extinção de união estável', spDivergencias.divorcio);
+        adicionarGrupo(saoPauloGrupos, 'Diferenças de procedimento: separação de fato', spDivergencias.separacaoFato);
+        adicionarGrupo(saoPauloGrupos, 'Diferenças de procedimento: união estável', spDivergencias.uniaoEstavel);
+      }
+      if (s.ato === 'inventario') {
+        adicionarGrupo(saoPauloGrupos, 'Tipo de ato: inventário extrajudicial', spNormas.inventario);
+        adicionarGrupo(saoPauloGrupos, 'Diferenças de procedimento: inventário', spDivergencias.inventario);
+      }
+      if (s.ato === 'ata') adicionarGrupo(saoPauloGrupos, 'Tipo de ato: ata notarial', spNormas.ata);
+      if (s.ato === 'usucapiao') adicionarGrupo(saoPauloGrupos, 'Tipo de ato: ata para usucapião extrajudicial', [...spNormas.ata, ...spNormas.usucapiao]);
+      if (s.ato === 'adjudicacao') adicionarGrupo(saoPauloGrupos, 'Tipo de ato: ata para adjudicação compulsória extrajudicial', [...spNormas.ata, ...spNormas.adjudicacao]);
+      if (s.ato === 'pacto') adicionarGrupo(saoPauloGrupos, 'Tipo de ato: pacto antenupcial', spNormas.pacto);
+      if (s.ato === 'dacaoPagamento') adicionarGrupo(saoPauloGrupos, 'Tipo de ato: dação em pagamento', spNormas.dacaoPagamento);
+      if (s.ato === 'nomeacaoInventariante') {
+        adicionarGrupo(saoPauloGrupos, 'Tipo de ato: nomeação de inventariante', spNormas.nomeacaoInventariante);
+        adicionarGrupo(saoPauloGrupos, 'Diferenças de procedimento: nomeação de inventariante', spDivergencias.nomeacaoInventariante);
+        adicionarGrupo(saoPauloGrupos, 'Diferenças de procedimento: inventário', spDivergencias.inventario);
+      }
+      if (s.ato === 'confissaoDivida') adicionarGrupo(saoPauloGrupos, 'Tipo de ato: confissão de dívida', spNormas.confissaoDivida);
+      if (s.ato === 'testamento') adicionarGrupo(saoPauloGrupos, 'Tipo de ato: testamento ou revogação de testamento', spNormas.testamento);
+
+      const pendencias = [
+        'Confirmar a competência, forma do ato e possibilidade de atendimento presencial, eletrônico ou híbrido.',
+        'Conferir documentos originais, validade, autenticidade e coerência entre nomes, CPFs, estado civil, união estável e domicílio.',
+        'Submeter o caso à qualificação do escrevente ou tabelião responsável antes da lavratura definitiva.',
+        'Não considerar a triagem como aprovação do ato, cálculo final de emolumentos ou validação jurídica completa.'
+      ];
+
+      return {
+        titulo: ato.nome,
+        resumo: ato.resumo,
+        nomeCaso: s.nomeCaso,
+        documentos: limparDuplicados(documentos),
+        imovel: limparDuplicados(imovel),
+        complementares: itensDosGrupos(complementaresGrupos),
+        complementaresGrupos,
+        conformidade: itensDosGrupos(conformidadeGrupos),
+        conformidadeGrupos,
+        saoPaulo: itensDosGrupos(saoPauloGrupos),
+        saoPauloGrupos,
+        tributos: limparDuplicados(tributos),
+        atencao: limparDuplicados(atencao),
+        pendencias,
+        observacoes: s.observacoes
+      };
+    }
+
+    function renderizarTriagem(triagem) {
+      resultadoTitulo.textContent = triagem.titulo;
+      resultadoSubtitulo.textContent = triagem.resumo;
+
+      resultadoSecoes.innerHTML = [
+        triagem.nomeCaso ? criarSecao('Identificação interna', [triagem.nomeCaso], 'okbox') : '',
+        criarSecao('Documentos e informações iniciais', triagem.documentos, '', true),
+        criarSecao('Documentos do imóvel ou do bem', triagem.imovel, '', true),
+        criarSecaoAgrupada('Documentos complementares', triagem.complementaresGrupos, '', true),
+        criarSecaoAgrupada('Observações Nacionais (CNJ): diferenças com as cautelas locais', triagem.conformidadeGrupos, 'okbox'),
+        criarSecaoAgrupada('Observações São Paulo: diferenças e cautelas locais', triagem.saoPauloGrupos, 'spbox'),
+        criarSecao('Tributos, guias e isenções', triagem.tributos),
+        criarSecao('Pontos de atenção', triagem.atencao, 'attention'),
+        criarSecao('Pendências antes da lavratura', triagem.pendencias),
+        triagem.observacoes ? criarSecao('Observações informadas', [triagem.observacoes]) : ''
+      ].join('');
+
+      textoCopiavel.textContent = montarTexto(triagem);
+      emptyState.style.display = 'none';
+      resultado.classList.add('active');
+      document.getElementById('resultadoCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function adicionarGruposAoTexto(linhas, titulo, grupos) {
+      if (!grupos || !grupos.length) return;
+      linhas.push('');
+      linhas.push(`${titulo}:`);
+      grupos.forEach(grupo => {
+        if (!grupo.itens || !grupo.itens.length) return;
+        linhas.push(`- ${grupo.titulo}`);
+        grupo.itens.forEach((item, i) => linhas.push(`  ${i + 1}. ${item}`));
+      });
+    }
+
+    function montarTexto(t) {
+      const linhas = [];
+      linhas.push('TRIAGEM NOTARIAL');
+      linhas.push('');
+      linhas.push(`Ato: ${t.titulo}`);
+      if (t.nomeCaso) linhas.push(`Identificação interna: ${t.nomeCaso}`);
+      linhas.push('');
+      linhas.push('Documentos e informações iniciais:');
+      t.documentos.forEach((item, i) => linhas.push(`${i + 1}. ${item}`));
+      if (t.imovel.length) {
+        linhas.push('');
+        linhas.push('Documentos do imóvel ou do bem:');
+        t.imovel.forEach((item, i) => linhas.push(`${i + 1}. ${item}`));
+      }
+      adicionarGruposAoTexto(linhas, 'Documentos complementares', t.complementaresGrupos);
+      adicionarGruposAoTexto(linhas, 'Observações Nacionais (CNJ): diferenças com as cautelas locais', t.conformidadeGrupos);
+      adicionarGruposAoTexto(linhas, 'Observações São Paulo: diferenças e cautelas locais', t.saoPauloGrupos);
+      if (t.tributos.length) {
+        linhas.push('');
+        linhas.push('Tributos, guias e isenções:');
+        t.tributos.forEach((item, i) => linhas.push(`${i + 1}. ${item}`));
+      }
+      if (t.atencao.length) {
+        linhas.push('');
+        linhas.push('Pontos de atenção:');
+        t.atencao.forEach((item, i) => linhas.push(`${i + 1}. ${item}`));
+      }
+      linhas.push('');
+      linhas.push('Pendências antes da lavratura:');
+      t.pendencias.forEach((item, i) => linhas.push(`${i + 1}. ${item}`));
+      if (t.observacoes) {
+        linhas.push('');
+        linhas.push('Observações informadas:');
+        linhas.push(t.observacoes);
+      }
+      linhas.push('');
+      linhas.push('Aviso: checklist orientativo. A lista não substitui a qualificação notarial, a análise da serventia competente, a conferência dos documentos originais, a legislação local aplicável, a tabela de emolumentos ou a orientação jurídica do caso concreto.');
+      return linhas.join('\n');
+    }
+
+    function mostrarToast(msg) {
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2100);
+    }
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const triagem = montarTriagem();
+      if (!triagem) {
+        mostrarToast('Selecione o tipo de ato.');
+        return;
+      }
+      renderizarTriagem(triagem);
+    });
+
+    document.getElementById('pdfBtn').addEventListener('click', function() {
+      if (!textoCopiavel.textContent.trim()) {
+        mostrarToast('Gere o checklist antes de gerar o PDF.');
+        return;
+      }
+      window.print();
+    });
+
+    document.getElementById('limparBtn').addEventListener('click', function() {
+      form.reset();
+      resultado.classList.remove('active');
+      emptyState.style.display = 'flex';
+      resultadoSecoes.innerHTML = '';
+      textoCopiavel.textContent = '';
+      document.getElementById('ato').focus();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+
+    function setupCounter() {
+      const counter = document.getElementById('visitCounter');
+      if (!counter) return;
+
+      const isLocalFile = window.location.protocol === 'file:';
+      const host = window.location.hostname || 'portalnotarial.com.br';
+      const path = (window.location.pathname || '/triagem-notarial.html').replace(/\/$/, '') || '/triagem-notarial.html';
+      const page = isLocalFile ? 'portalnotarial.com.br/triagem-notarial.html' : `${host}${path}`;
+
+      counter.src = `https://hits.sh/${encodeURIComponent(page)}.svg?label=Visitas%3A&color=e5e7eb&labelColor=ffffff&style=flat-square`;
+      counter.onerror = () => {
+        const holder = counter.closest('.visit');
+        if (holder) holder.textContent = 'Visitas: 0';
+      };
+    }
+
+    setupCounter();
+
+    document.getElementById('ato').addEventListener('change', function() {
+      const atosComImovel = ['compraVenda','doacao','usucapiao','adjudicacao','alienacaoFiduciaria','distrato','sobrepartilha','dacaoPagamento'];
+      if (atosComImovel.includes(this.value)) {
+        document.getElementById('temImovel').checked = true;
+      }
+    });
+  </script>
 </body>
 </html>
