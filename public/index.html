@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Triagem Notarial | Portal Notarial</title>
+  <meta name="description" content="Gerador de checklist para organizar documentos, informações, pontos de atenção, alertas de conformidade e normas aplicáveis antes do envio do ato ao tabelionato de notas." />
+  <meta name="robots" content="index, follow" />
+  <meta name="google-adsense-account" content="ca-pub-1578115877344777" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/style.css" />
+
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1578115877344777" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <main class="page">
+    <section class="hero">
+      <span class="eyebrow">Portal Notarial</span>
+      <h1>Triagem Notarial</h1>
+
+      <p class="lead">
+        Gerador de checklist para organizar documentos, informações, pontos de atenção,
+        alertas de conformidade e normas aplicáveis antes do envio do ato ao tabelionato de notas.
+      </p>
+
+      <p class="lead small">
+        Ferramenta de apoio à rotina de cartórios de notas, advocacia e imobiliárias,
+        destinada à preparação inicial da documentação e à identificação prévia de exigências
+        que poderão ser conferidas pelo tabelionato competente.
+      </p>
+    </section>
+
+    <section class="panel">
+      <h2>Dados para triagem</h2>
+
+      <label for="tipoAto">Tipo de ato</label>
+      <select id="tipoAto">
+  <option value="">Carregando tipos de ato...</option>
+</select>
+<div class="situacoes">
+
+  <h3>Situações presentes no caso</h3>
+
+  <label class="check">
+    <input type="checkbox" name="situacoes" value="imovel" />
+    Envolve imóvel
+  </label>
+
+  <label class="check">
+    <input type="checkbox" name="situacoes" value="imovel-rural" />
+    Imóvel rural
+  </label>
+
+  <label class="check">
+    <input type="checkbox" name="situacoes" value="dominio-uniao" />
+    Domínio útil ou terreno da União
+  </label>
+
+  <label class="check">
+    <input type="checkbox" name="situacoes" value="pessoa-juridica" />
+    Pessoa jurídica
+  </label>
+
+  <label class="check">
+    <input type="checkbox" name="situacoes" value="procuracao" />
+    Procuração
+  </label>
+
+  <label class="check">
+    <input type="checkbox" name="situacoes" value="estrangeiro" />
+    Pessoa estrangeira
+  </label>
+
+  <label class="check">
+    <input type="checkbox" name="situacoes" value="financiamento" />
+    Financiamento
+  </label>
+
+  <label class="check">
+    <input type="checkbox" name="situacoes" value="conta-notarial" />
+    Conta notarial vinculada
+  </label>
+
+  <label class="check">
+    <input type="checkbox" name="situacoes" value="tributo-isencao" />
+    Tributo ou isenção
+  </label>
+
+  <label class="check">
+    <input type="checkbox" name="situacoes" value="uif-coaf" />
+    Conformidade UIF (COAF)
+  </label>
+
+  <p class="hint">
+    Marque quando quiser incluir alertas de PLD/FTP sobre beneficiário final, forma de pagamento, origem econômica, pessoa exposta politicamente e operações atípicas.
+  </p>
+
+  <label class="check">
+    <input type="checkbox" name="situacoes" value="eletronico-hibrido" />
+    Ato eletrônico ou híbrido
+  </label>
+</div>
+      
+<div class="actions">
+  <button id="btnTestar" type="button">Gerar checklist</button>
+  <button id="btnPdf" class="btn-secondary" type="button">Gerar PDF</button>
+</div>
+        
+      <div id="resultado" class="resultado">
+        Selecione o tipo de ato e gere a triagem inicial.
+      </div>
+    </section>
+
+    <footer class="footer">
+  <p>
+    Aviso: ferramenta orientativa destinada ao uso geral. A lista gerada não substitui
+    a qualificação notarial, a exigência de documentos complementares pelo tabelionato
+    competente, a conferência dos documentos originais, a legislação local aplicável,
+    a tabela de emolumentos ou a orientação jurídica do caso concreto.
+  </p>
+
+  <p class="footer-links">
+    Portal Notarial:
+    <a href="https://portalnotarial.com.br/" target="_blank" rel="noopener noreferrer">
+      https://portalnotarial.com.br/
+    </a>
+  </p>
+
+  <p class="footer-links">
+    Projeto apoiado por Escritura Pública -
+    <a href="https://escriturapublica.substack.com" target="_blank" rel="noopener noreferrer">
+      https://escriturapublica.substack.com
+    </a>
+    |
+    Atesta -
+    <a href="https://www.atesta.com.br" target="_blank" rel="noopener noreferrer">
+      https://www.atesta.com.br
+    </a>
+  </p>
+</footer>
+  </main>
+
+  <script src="/app.js"></script>
+</body>
+</html>
