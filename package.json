@@ -1,16 +1,1 @@
-{
-  "name": "triagem-notarial-render",
-  "version": "1.0.0",
-  "description": "Triagem Notarial com frontend público e regras jurídicas no backend",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
-  },
-  "dependencies": {
-    "express": "^4.18.3"
-  },
-  "engines": {
-    "node": ">=20"
-  }
-}
+{"scripts":{"start":"node server.js"},"dependencies":{"express":"^4.18.2"},"devDependencies":{}}
