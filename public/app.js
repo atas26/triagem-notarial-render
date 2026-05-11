@@ -53,73 +53,113 @@ const linksDocumentais = [
 ];
 
 function regrasDocumentaisOrdenadas() {
-  return linksDocumentais.flatMap(regra => regra.termos.map(termo => ({ termo, url: regra.url }))).sort((a, b) => b.termo.length - a.termo.length);
+  return linksDocumentais
+    .flatMap(regra => regra.termos.map(termo => ({ termo, url: regra.url })))
+    .sort((a, b) => b.termo.length - a.termo.length);
 }
 
 function escapeHtml(texto) {
-  return String(texto).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+  return String(texto)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
 }
 
 function linkificarTextoDocumental(texto) {
   const original = String(texto);
   const lower = original.toLowerCase();
   const candidatos = [];
+
   regrasDocumentaisOrdenadas().forEach(regra => {
     const termoLower = regra.termo.toLowerCase();
     let pos = lower.indexOf(termoLower);
+
     while (pos !== -1) {
-      candidatos.push({ start: pos, end: pos + termoLower.length, url: regra.url });
+      candidatos.push({
+        start: pos,
+        end: pos + termoLower.length,
+        url: regra.url
+      });
+
       pos = lower.indexOf(termoLower, pos + termoLower.length);
     }
   });
+
   candidatos.sort((a, b) => a.start - b.start || (b.end - b.start) - (a.end - a.start));
+
   const selecionados = [];
   let limite = 0;
+
   candidatos.forEach(candidato => {
     if (candidato.start >= limite) {
       selecionados.push(candidato);
       limite = candidato.end;
     }
   });
+
   if (!selecionados.length) return escapeHtml(original);
+
   let html = '';
   let cursor = 0;
+
   selecionados.forEach(match => {
     html += escapeHtml(original.slice(cursor, match.start));
     html += `<a class="doc-link" href="${escapeHtml(match.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(original.slice(match.start, match.end))}</a>`;
     cursor = match.end;
   });
+
   html += escapeHtml(original.slice(cursor));
+
   return html;
 }
 
 function criarSecao(titulo, itens, classe = '', aplicarLinksDocumentais = false) {
   if (!itens || itens.length === 0) return '';
-  const lis = itens.map(item => `<li>${aplicarLinksDocumentais ? linkificarTextoDocumental(item) : escapeHtml(item)}</li>`).join('');
+
+  const lis = itens
+    .map(item => `<li>${aplicarLinksDocumentais ? linkificarTextoDocumental(item) : escapeHtml(item)}</li>`)
+    .join('');
+
   return `<div class="section ${classe}"><h3>${escapeHtml(titulo)}</h3><ul>${lis}</ul></div>`;
 }
 
 function criarSecaoAgrupada(titulo, grupos, classe = '', aplicarLinksDocumentais = false) {
   if (!grupos || grupos.length === 0) return '';
-  const conteudo = grupos.filter(grupo => grupo.itens && grupo.itens.length > 0).map(grupo => {
-    const tituloDivergencia = /^Divergências|^Diferenças/i.test(grupo.titulo || '');
-    const lis = grupo.itens.map(item => {
-      const texto = String(item);
-      const divergencia = /^Divergência|^Diferença/i.test(texto) || /testamento invalidado, revogado, rompido ou caduco/i.test(texto);
-      return `<li class="${divergencia ? 'divergencia-item' : ''}">${aplicarLinksDocumentais ? linkificarTextoDocumental(texto) : escapeHtml(texto)}</li>`;
-    }).join('');
-    return `<h4 class="group-title ${tituloDivergencia ? 'divergencia-title' : ''}">${escapeHtml(grupo.titulo)}</h4><ul class="grouped-list">${lis}</ul>`;
-  }).join('');
+
+  const conteudo = grupos
+    .filter(grupo => grupo.itens && grupo.itens.length > 0)
+    .map(grupo => {
+      const tituloDivergencia = /^Divergências|^Diferenças/i.test(grupo.titulo || '');
+
+      const lis = grupo.itens.map(item => {
+        const texto = String(item);
+        const divergencia =
+          /^Divergência|^Diferença/i.test(texto) ||
+          /testamento invalidado, revogado, rompido ou caduco/i.test(texto);
+
+        return `<li class="${divergencia ? 'divergencia-item' : ''}">${aplicarLinksDocumentais ? linkificarTextoDocumental(texto) : escapeHtml(texto)}</li>`;
+      }).join('');
+
+      return `<h4 class="group-title ${tituloDivergencia ? 'divergencia-title' : ''}">${escapeHtml(grupo.titulo)}</h4><ul class="grouped-list">${lis}</ul>`;
+    })
+    .join('');
+
   if (!conteudo) return '';
+
   return `<div class="section ${classe}"><h3>${escapeHtml(titulo)}</h3>${conteudo}</div>`;
 }
 
 function adicionarGruposAoTexto(linhas, titulo, grupos) {
   if (!grupos || !grupos.length) return;
+
   linhas.push('');
   linhas.push(`${titulo}:`);
+
   grupos.forEach(grupo => {
     if (!grupo.itens || !grupo.itens.length) return;
+
     linhas.push(`- ${grupo.titulo}`);
     grupo.itens.forEach((item, i) => linhas.push(`  ${i + 1}. ${item}`));
   });
@@ -127,46 +167,57 @@ function adicionarGruposAoTexto(linhas, titulo, grupos) {
 
 function montarTexto(t) {
   const linhas = [];
+
   linhas.push('TRIAGEM NOTARIAL');
   linhas.push('');
   linhas.push(`Ato: ${t.titulo}`);
   linhas.push('');
   linhas.push('Documentos e informações iniciais:');
+
   t.documentos.forEach((item, i) => linhas.push(`${i + 1}. ${item}`));
+
   if (t.imovel.length) {
     linhas.push('');
     linhas.push('Documentos do imóvel ou do bem:');
     t.imovel.forEach((item, i) => linhas.push(`${i + 1}. ${item}`));
   }
+
   adicionarGruposAoTexto(linhas, 'Documentos complementares', t.complementaresGrupos);
   adicionarGruposAoTexto(linhas, 'Observações Nacionais (CNJ): diferenças com as cautelas locais', t.conformidadeGrupos);
   adicionarGruposAoTexto(linhas, 'Observações São Paulo: diferenças e cautelas locais', t.saoPauloGrupos);
+
   if (t.tributos.length) {
     linhas.push('');
     linhas.push('Tributos, guias e isenções:');
     t.tributos.forEach((item, i) => linhas.push(`${i + 1}. ${item}`));
   }
+
   if (t.atencao.length) {
     linhas.push('');
     linhas.push('Pontos de atenção:');
     t.atencao.forEach((item, i) => linhas.push(`${i + 1}. ${item}`));
   }
+
   linhas.push('');
   linhas.push('Pendências antes da lavratura:');
   t.pendencias.forEach((item, i) => linhas.push(`${i + 1}. ${item}`));
+
   if (t.observacoes) {
     linhas.push('');
     linhas.push('Observações informadas:');
     linhas.push(t.observacoes);
   }
+
   linhas.push('');
   linhas.push('Aviso: checklist orientativo. A lista não substitui a qualificação notarial, a análise da serventia competente, a conferência dos documentos originais, a legislação local aplicável, a tabela de emolumentos ou a orientação jurídica do caso concreto.');
+
   return linhas.join('\n');
 }
 
 function renderizarTriagem(triagem) {
   resultadoTitulo.textContent = triagem.titulo;
   resultadoSubtitulo.textContent = triagem.resumo;
+
   resultadoSecoes.innerHTML = [
     criarSecao('Documentos e informações iniciais', triagem.documentos, '', true),
     criarSecao('Documentos do imóvel ou do bem', triagem.imovel, '', true),
@@ -178,6 +229,7 @@ function renderizarTriagem(triagem) {
     criarSecao('Pendências antes da lavratura', triagem.pendencias),
     triagem.observacoes ? criarSecao('Observações informadas', [triagem.observacoes]) : ''
   ].join('');
+
   textoCopiavel.textContent = montarTexto(triagem);
   emptyState.style.display = 'none';
   resultado.classList.add('active');
@@ -194,8 +246,11 @@ async function carregarAtos() {
   try {
     const resposta = await fetch('/api/atos');
     const dados = await resposta.json();
+
     if (!resposta.ok || !dados.ok || !Array.isArray(dados.atos)) return;
+
     atoSelect.innerHTML = '<option value="">Selecione</option>';
+
     dados.atos.forEach(ato => {
       const option = document.createElement('option');
       option.value = ato.id;
@@ -209,22 +264,28 @@ async function carregarAtos() {
 
 form.addEventListener('submit', async function(e) {
   e.preventDefault();
+
   const selecionados = obterSelecionados();
+
   if (!selecionados.ato) {
     mostrarToast('Selecione o tipo de ato.');
     atoSelect.focus();
     return;
   }
+
   try {
     const resposta = await fetch('/api/triagem', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(selecionados)
     });
+
     const dados = await resposta.json();
+
     if (!resposta.ok || !dados.ok || !dados.triagem) {
       throw new Error(dados.mensagem || 'Falha ao gerar triagem.');
     }
+
     renderizarTriagem(dados.triagem);
   } catch (erro) {
     mostrarToast('Não foi possível gerar a triagem pelo servidor.');
@@ -236,6 +297,7 @@ document.getElementById('pdfBtn').addEventListener('click', function() {
     mostrarToast('Gere o checklist antes de gerar o PDF.');
     return;
   }
+
   window.print();
 });
 
@@ -252,11 +314,12 @@ document.getElementById('limparBtn').addEventListener('click', function() {
 function setupCounter() {
   const counter = document.getElementById('visitCounter');
   if (!counter) return;
-  const isLocalFile = window.location.protocol === 'file:';
-  const host = window.location.hostname || 'portalnotarial.com.br';
-  const path = (window.location.pathname || '/triagem-notarial.html').replace(/\/$/, '') || '/triagem-notarial.html';
-  const page = isLocalFile ? 'portalnotarial.com.br/triagem-notarial.html' : `${host}${path}`;
-  counter.src = `https://hits.sh/${encodeURIComponent(page)}.svg?label=Visitas%3A&color=e5e7eb&labelColor=ffffff&style=flat-square`;
+
+  const page = 'portalnotarial.com.br/triagem-notarial.html';
+  const encodedPage = page.split('/').map(encodeURIComponent).join('/');
+
+  counter.src = `https://hits.sh/${encodedPage}.svg?label=Visitas%3A&color=e5e7eb&labelColor=ffffff&style=flat-square`;
+
   counter.onerror = () => {
     const holder = counter.closest('.visit');
     if (holder) holder.textContent = 'Visitas: 0';
@@ -267,7 +330,17 @@ setupCounter();
 carregarAtos();
 
 document.getElementById('ato').addEventListener('change', function() {
-  const atosComImovel = ['compraVenda','doacao','usucapiao','adjudicacao','alienacaoFiduciaria','distrato','sobrepartilha','dacaoPagamento'];
+  const atosComImovel = [
+    'compraVenda',
+    'doacao',
+    'usucapiao',
+    'adjudicacao',
+    'alienacaoFiduciaria',
+    'distrato',
+    'sobrepartilha',
+    'dacaoPagamento'
+  ];
+
   if (atosComImovel.includes(this.value)) {
     document.getElementById('temImovel').checked = true;
   }

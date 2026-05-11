@@ -12,7 +12,7 @@
   <style>
     :root {
       --vermelho: #e83946;
-      --teal: #00909d;
+      --teal: rgb(0, 118, 255);
       --azul: #0b5fff;
       --texto: #1f2937;
       --muted: #5f6b7a;
@@ -72,7 +72,7 @@
     .topbar-links a:hover { color: var(--teal); }
 
     .hero {
-      background: linear-gradient(135deg, rgba(0,144,157,0.10), rgba(232,57,70,0.08));
+      background: linear-gradient(135deg, rgba(0,118,255,0.10), rgba(232,57,70,0.08));
       border-bottom: 1px solid var(--linha);
     }
 
@@ -177,18 +177,25 @@
       padding: 12px 12px;
       outline: none;
       transition: border-color .18s ease, box-shadow .18s ease;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     select:focus,
     input:focus,
     textarea:focus {
       border-color: var(--teal);
-      box-shadow: 0 0 0 4px rgba(0,144,157,0.12);
+      box-shadow: 0 0 0 4px rgba(0,118,255,0.12);
     }
 
     textarea {
       min-height: 88px;
       resize: vertical;
+      line-height: 1.5;
+    }
+
+    textarea::placeholder {
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--muted);
     }
 
     .hint {
@@ -254,7 +261,7 @@
       background: var(--teal);
       color: #ffffff;
       grid-column: 1 / -1;
-      box-shadow: 0 12px 24px rgba(0,144,157,0.18);
+      box-shadow: 0 12px 24px rgba(0,118,255,0.18);
     }
 
     .btn-secondary {
@@ -304,17 +311,6 @@
       margin: 7px 0 0;
       color: var(--muted);
       font-size: 14px;
-    }
-
-    .tag {
-      display: inline-flex;
-      white-space: nowrap;
-      padding: 8px 11px;
-      border-radius: 999px;
-      background: rgba(0,144,157,0.11);
-      color: var(--teal);
-      font-size: 12px;
-      font-weight: 700;
     }
 
     .section {
@@ -369,7 +365,6 @@
       background: #ecfdf5;
     }
 
-
     .spbox {
       border-color: rgba(232,57,70,0.40);
       background: #fff6f7;
@@ -390,10 +385,10 @@
       background: rgba(232,57,70,0.10);
     }
 
-
     .spbox .group-title.divergencia-title { color: var(--divergencia); }
 
-    .spbox li.divergencia-item {
+    .spbox li.divergencia-item,
+    .okbox li.divergencia-item {
       color: var(--divergencia);
       border-left: 4px solid var(--divergencia);
       background: rgba(124,58,237,0.07);
@@ -401,7 +396,8 @@
       list-style-position: inside;
     }
 
-    .spbox li.divergencia-item:hover {
+    .spbox li.divergencia-item:hover,
+    .okbox li.divergencia-item:hover {
       background: rgba(124,58,237,0.14);
     }
 
@@ -409,10 +405,22 @@
       border: 1px solid rgba(232,57,70,0.35);
       border-radius: 14px;
       background: #fff6f7;
-      color: var(--vermelho);
       padding: 12px 14px;
       font-size: 13px;
       margin-top: 22px;
+    }
+
+    .sp-legend p {
+      margin: 0;
+      color: var(--vermelho);
+    }
+
+    .sp-legend p + p {
+      margin-top: 6px;
+    }
+
+    .sp-legend .purple-note {
+      color: var(--divergencia);
     }
 
     .copybox {
@@ -448,6 +456,7 @@
     }
 
     .footer a { color: var(--teal); text-decoration: none; }
+
     .doc-link {
       color: var(--teal);
       font-weight: 700;
@@ -459,7 +468,6 @@
     }
 
     .footer a:hover { text-decoration: underline; }
-
 
     .project-support {
       margin: 14px 0 0;
@@ -516,7 +524,6 @@
     @media (max-width: 920px) {
       .grid { grid-template-columns: 1fr; }
       .result-title { display: block; }
-      .tag { margin-top: 12px; }
       .topbar-inner { align-items: flex-start; flex-direction: column; }
     }
 
@@ -536,9 +543,15 @@
     <div class="hero-inner">
       <div class="badge">Ferramenta orientativa</div>
       <h1>Triagem Notarial</h1>
-      <p>Gerador de checklist para organizar documentos, informações, pontos de atenção, alertas de conformidade e normas aplicáveis antes do envio do ato ao tabelionato de notas.</p>
-      <p>Ferramenta de apoio à rotina de cartórios de notas, advocacia e imobiliárias, destinada à preparação inicial da documentação e à identificação prévia de exigências que poderão ser conferidas pelo tabelionato competente.</p>
-      <div class="sp-legend">Observações em vermelho indicam exigências, cautelas ou diferenças operacionais relevantes das Normas de Serviço da Corregedoria Geral da Justiça de São Paulo em relação à base nacional.</div>
+      <p>Organize as informações e os documentos antes de solicitar o ato notarial.</p>
+      <p>A Triagem Notarial orienta a preparação inicial do atendimento, com indicação de documentos, informações necessárias, pontos de atenção, alertas de conformidade e normas aplicáveis ao ato pretendido.</p>
+      <p>A ferramenta é voltada a pessoas físicas, advocacia, imobiliárias e rotinas de cartórios de notas. O objetivo é permitir que o usuário chegue ao tabelionato com a documentação mais completa, deixando o contato com a equipe para dúvidas específicas, conferência do caso concreto ou solicitação formal do ato.</p>
+      <p>A triagem não substitui a análise do tabelião de notas ou da equipe responsável. Documentos complementares poderão ser solicitados conforme a natureza do ato, as partes envolvidas e as exigências legais aplicáveis.</p>
+
+      <div class="sp-legend">
+        <p>Observações em vermelho indicam exigências, cautelas ou diferenças operacionais relevantes das Normas de Serviço da Corregedoria Geral da Justiça de São Paulo em relação à base nacional.</p>
+        <p class="purple-note">Observações em roxo indicam divergência entre o Código de Normas Nacional e as Normas de Serviço da Corregedoria Geral da Justiça de São Paulo em relação à base nacional.</p>
+      </div>
     </div>
   </section>
 
@@ -555,34 +568,6 @@
             <label for="ato">Tipo de ato</label>
             <select id="ato" required>
               <option value="">Selecione</option>
-              <option value="compraVenda">Compra e venda de imóvel</option>
-              <option value="doacao">Doação</option>
-              <option value="inventario">Inventário extrajudicial</option>
-              <option value="uniaoEstavel">União estável</option>
-              <option value="sobrepartilha">Sobrepartilha</option>
-              <option value="divorcio">Divórcio e Extinção de União Estável</option>
-              <option value="pacto">Pacto antenupcial</option>
-              <option value="procuracao">Procuração pública</option>
-              <option value="ata">Ata notarial</option>
-              <option value="usucapiao">Ata para usucapião extrajudicial</option>
-              <option value="adjudicacao">Ata para adjudicação compulsória extrajudicial</option>
-              <option value="alienacaoFiduciaria">Alienação fiduciária em garantia</option>
-              <option value="distrato">Distrato, rescisão ou desfazimento</option>
-              <option value="dacaoPagamento">Dação em pagamento</option>
-              <option value="nomeacaoInventariante">Nomeação de inventariante</option>
-              <option value="confissaoDivida">Confissão de dívida</option>
-              <option value="testamento">Testamento ou revogação de testamento</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="perfil">Perfil de uso</label>
-            <select id="perfil" required>
-              <option value="">Selecione</option>
-              <option value="cartorio">Cartório de notas</option>
-              <option value="advocacia">Advocacia</option>
-              <option value="imobiliaria">Imobiliária</option>
-              <option value="parte">Parte interessada</option>
             </select>
           </div>
 
@@ -605,7 +590,7 @@
 
           <div>
             <label for="observacoes">Observações úteis</label>
-            <textarea id="observacoes" placeholder="Tirar dúvida com o cliente/escrevente sobre..."></textarea>
+            <textarea id="observacoes" placeholder="Tirar a seguinte dúvida com o cliente/escrevente..."></textarea>
           </div>
 
           <div class="actions">
@@ -630,7 +615,6 @@
               <h2 id="resultadoTitulo">Triagem Notarial</h2>
               <p id="resultadoSubtitulo">Checklist orientativo para organização inicial do ato.</p>
             </div>
-            <span class="tag" id="resultadoPerfil">Perfil</span>
           </div>
 
           <div id="resultadoSecoes"></div>
@@ -652,11 +636,11 @@
   </footer>
 
   <span aria-label="Contador global de visitas da página" class="visit" title="Visitas: 0">
-    <img alt="Visitas: 0" id="visitCounter" loading="lazy" referrerpolicy="no-referrer-when-downgrade"/>
+    <img alt="Visitas: 0" id="visitCounter" loading="lazy" referrerpolicy="no-referrer-when-downgrade" />
   </span>
 
   <div class="toast" id="toast">Texto copiado.</div>
 
-    <script src="/app.js" defer></script>
+  <script src="/app.js" defer></script>
 </body>
 </html>
