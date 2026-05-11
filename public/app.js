@@ -1,3 +1,7 @@
+const BASE_PATH = window.location.pathname.startsWith('/triagem-notarial')
+  ? '/triagem-notarial'
+  : '';
+
 const form = document.getElementById('triagemForm');
 const resultado = document.getElementById('resultado');
 const emptyState = document.getElementById('emptyState');
@@ -244,7 +248,7 @@ function mostrarToast(msg) {
 
 async function carregarAtos() {
   try {
-    const resposta = await fetch('/api/atos');
+    const resposta = await fetch(`${BASE_PATH}/api/atos`);
     const dados = await resposta.json();
 
     if (!resposta.ok || !dados.ok || !Array.isArray(dados.atos)) return;
@@ -274,7 +278,7 @@ form.addEventListener('submit', async function(e) {
   }
 
   try {
-    const resposta = await fetch('/api/triagem', {
+    const resposta = await fetch(`${BASE_PATH}/api/triagem`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(selecionados)
@@ -315,7 +319,7 @@ function setupCounter() {
   const counter = document.getElementById('visitCounter');
   if (!counter) return;
 
-  const page = 'portalnotarial.com.br/triagem-notarial.html';
+  const page = 'portalnotarial.com.br/triagem-notarial';
   const encodedPage = page.split('/').map(encodeURIComponent).join('/');
 
   counter.src = `https://hits.sh/${encodedPage}.svg?label=Visitas%3A&color=e5e7eb&labelColor=ffffff&style=flat-square`;

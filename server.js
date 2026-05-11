@@ -6,9 +6,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(express.json({ limit: '1mb' }));
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/api/health', (req, res) => {
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/triagem-notarial', express.static(path.join(__dirname, 'public')));
+
+app.get(['/api/health', '/triagem-notarial/api/health'], (req, res) => {
   res.json({
     ok: true,
     service: 'triagem-notarial',
@@ -16,19 +18,31 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-app.get('/api/atos', (req, res) => {
+app.get(['/api/atos', '/triagem-notarial/api/atos'], (req, res) => {
   res.json({
     ok: true,
     atos: obterAtos()
   });
 });
 
-app.post('/api/triagem', (req, res) => {
+app.post(['/api/triagem', '/triagem-notarial/api/triagem'], (req, res) => {
   const triagem = montarTriagem(req.body || {});
+
   if (!triagem) {
-    return res.status(400).json({ ok: false, mensagem: 'Tipo de ato não informado ou inválido.' });
+    return res.status(400).json({
+      ok: false,
+      mensagem: 'Tipo de ato não informado ou inválido.'
+    });
   }
-  res.json({ ok: true, triagem });
+
+  res.json({
+    ok: true,
+    triagem
+  });
+});
+
+app.get(['/triagem-notarial', '/triagem-notarial/'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 app.get('*', (req, res) => {
