@@ -760,9 +760,47 @@
         padding-bottom: 12px;
       }
 
+      body.print-checklist-only #resultadoSecoes {
+        display: block !important;
+      }
+
       body.print-checklist-only .section {
-        break-inside: avoid;
-        page-break-inside: avoid;
+        break-inside: auto !important;
+        page-break-inside: auto !important;
+        break-before: auto !important;
+        page-break-before: auto !important;
+        break-after: auto !important;
+        page-break-after: auto !important;
+        margin: 0 0 10px !important;
+        padding: 10px 12px !important;
+        border-radius: 8px !important;
+      }
+
+      body.print-checklist-only .section h3 {
+        margin: 0 0 6px !important;
+        font-size: 14px !important;
+        line-height: 1.25 !important;
+      }
+
+      body.print-checklist-only .section ul {
+        margin: 0 !important;
+        padding-left: 16px !important;
+      }
+
+      body.print-checklist-only .section li {
+        margin: 2px 0 !important;
+        line-height: 1.32 !important;
+        font-size: 11.5px !important;
+      }
+
+      body.print-checklist-only .group-title {
+        margin: 8px 0 4px !important;
+        font-size: 12px !important;
+        line-height: 1.25 !important;
+      }
+
+      body.print-checklist-only .grouped-list {
+        margin-bottom: 6px !important;
       }
     }
 
