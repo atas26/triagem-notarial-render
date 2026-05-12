@@ -521,10 +521,194 @@
       transform: translateY(0);
     }
 
+
+    .topbar-brand {
+      color: var(--texto);
+      font-weight: 800;
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+
+    .support-content {
+      display: grid;
+      gap: 22px;
+      margin: 0 0 26px;
+    }
+
+    .grid + .support-content {
+      margin-top: 46px;
+    }
+
+    .content-block {
+      background: #ffffff;
+      border: 1px solid var(--linha);
+      border-radius: var(--radius);
+      box-shadow: var(--sombra);
+      padding: 24px;
+    }
+
+    .content-kicker {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      margin: 0 0 10px;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: rgba(0,118,255,0.08);
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .content-block h2 {
+      margin: 0 0 10px;
+      font-size: clamp(24px, 3vw, 36px);
+      line-height: 1.12;
+      letter-spacing: -0.035em;
+      color: #111827;
+    }
+
+    .content-block h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      line-height: 1.3;
+      color: #111827;
+    }
+
+    .content-block p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.68;
+    }
+
+    .content-block p + p {
+      margin-top: 10px;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .content-card {
+      border: 1px solid var(--linha);
+      border-radius: 16px;
+      background: #fbfcfe;
+      padding: 16px;
+      min-height: 150px;
+    }
+
+    .step-list {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+      counter-reset: passos;
+    }
+
+    .step-item {
+      position: relative;
+      border: 1px solid var(--linha);
+      border-radius: 16px;
+      background: #fbfcfe;
+      padding: 42px 14px 14px;
+      min-height: 164px;
+      counter-increment: passos;
+    }
+
+    .step-item::before {
+      content: counter(passos);
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      width: 24px;
+      height: 24px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: var(--teal);
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .criteria-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .criteria-item {
+      border-left: 3px solid var(--teal);
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 13px 14px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.58;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .faq-list details {
+      border: 1px solid var(--linha);
+      border-radius: 14px;
+      background: #fbfcfe;
+      padding: 14px 16px;
+    }
+
+    .faq-list summary {
+      cursor: pointer;
+      color: #111827;
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .faq-list details p {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .institutional-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+      padding-top: 12px;
+      margin-top: 12px;
+      border-top: 1px solid var(--linha);
+    }
+
+    .institutional-links a {
+      font-weight: 700;
+    }
+
     @media (max-width: 920px) {
       .grid { grid-template-columns: 1fr; }
       .result-title { display: block; }
       .topbar-inner { align-items: flex-start; flex-direction: column; }
+
+
+      .content-grid,
+      .step-list,
+      .criteria-list {
+        grid-template-columns: 1fr;
+      }
+
+      .content-block {
+        padding: 20px;
+      }
+
     }
 
     @media print {
@@ -539,6 +723,18 @@
   </style>
 </head>
 <body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="topbar-brand" href="https://portalnotarial.com.br/">Portal Notarial</a>
+      <nav class="topbar-links" aria-label="Navegação de apoio da Triagem Notarial">
+        <a href="#o-que-faz">O que faz</a>
+        <a href="#quando-usar">Quando usar</a>
+        <a href="#como-usar">Como usar</a>
+        <a href="#criterios-fontes">Critérios e fontes</a>
+        <a href="#perguntas-frequentes">FAQ</a>
+      </nav>
+    </div>
+  </div>
   <section class="hero">
     <div class="hero-inner">
       <div class="badge">Ferramenta orientativa</div>
@@ -556,6 +752,88 @@
   </section>
 
   <main class="wrap">
+    <section class="support-content" aria-label="Informações sobre a Triagem Notarial">
+      <section class="content-block" id="o-que-faz">
+        <span class="content-kicker">Informação</span>
+        <h2>O que a ferramenta faz</h2>
+        <p>A Triagem Notarial gera um checklist inicial para atos praticados em tabelionato de notas. A partir do tipo de ato e das situações marcadas pelo usuário, a página organiza documentos, informações operacionais, pontos de atenção, alertas de conformidade e referências normativas aplicáveis.</p>
+        <p>O resultado serve para preparar o atendimento e reduzir retrabalho antes do contato com o tabelionato competente. A ferramenta não aprova o ato, não substitui qualificação notarial e não dispensa conferência de documentos originais.</p>
+
+        <div class="content-grid">
+          <article class="content-card" id="quando-usar">
+            <h3>Quando usar</h3>
+            <p>Use antes de solicitar escritura, procuração, ata notarial, inventário, divórcio, pacto, união estável, alienação fiduciária, adjudicação, usucapião ou outro ato disponível na lista.</p>
+          </article>
+          <article class="content-card">
+            <h3>Quem pode usar</h3>
+            <p>A ferramenta foi pensada para usuários, advogados, imobiliárias, escreventes e equipes que precisam reunir dados mínimos antes da análise do caso concreto.</p>
+          </article>
+          <article class="content-card">
+            <h3>Resultado esperado</h3>
+            <p>O checklist apresenta documentos e cautelas por grupos. Os itens podem variar conforme o ato, a presença de imóvel, pessoa jurídica, procurador, tributo, menor, estrangeiro ou ato eletrônico.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-block" id="como-usar">
+        <span class="content-kicker">Como usar</span>
+        <h2>Como usar a Triagem Notarial</h2>
+        <div class="step-list">
+          <article class="step-item">
+            <h3>Escolha o ato</h3>
+            <p>Selecione o tipo de ato pretendido. Essa escolha define a base principal do checklist.</p>
+          </article>
+          <article class="step-item">
+            <h3>Marque as situações</h3>
+            <p>Indique se há imóvel, pessoa jurídica, procuração, tributo, financiamento, menor, estrangeiro ou ato eletrônico.</p>
+          </article>
+          <article class="step-item">
+            <h3>Inclua observações</h3>
+            <p>Use o campo livre para registrar dúvida, particularidade do caso ou ponto que deverá ser confirmado no atendimento.</p>
+          </article>
+          <article class="step-item">
+            <h3>Gere o checklist</h3>
+            <p>Clique em gerar checklist e leia todas as seções antes de encaminhar documentos ou pedir a lavratura do ato.</p>
+          </article>
+          <article class="step-item">
+            <h3>Confirme o caso</h3>
+            <p>Leve o resultado ao tabelionato responsável. A equipe poderá exigir documentos complementares ou ajustar a orientação.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-block" id="interpretar-resultado">
+        <span class="content-kicker">Resultado</span>
+        <h2>Como interpretar o resultado</h2>
+        <div class="content-grid">
+          <article class="content-card">
+            <h3>Documentos iniciais</h3>
+            <p>Indicam os documentos normalmente necessários para qualificação das partes, comprovação de estado civil, representação e identificação do ato.</p>
+          </article>
+          <article class="content-card">
+            <h3>Documentos do imóvel ou do bem</h3>
+            <p>Aparecem quando o ato envolve imóvel, direito real, garantia, bem específico ou situação que exige identificação patrimonial.</p>
+          </article>
+          <article class="content-card">
+            <h3>Observações nacionais e locais</h3>
+            <p>Alertas nacionais, pontos de São Paulo e divergências operacionais devem ser lidos como cautelas de triagem, não como decisão final sobre o ato.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-block" id="criterios-fontes">
+        <span class="content-kicker">Critérios e fontes</span>
+        <h2>Critérios, fontes e limites</h2>
+        <p>A ferramenta usa regras previamente estruturadas no código da aplicação, com base em normas públicas e critérios operacionais de triagem. O resultado depende das opções escolhidas pelo usuário e não substitui a leitura da norma vigente.</p>
+        <div class="criteria-list">
+          <div class="criteria-item">Fontes de referência indicadas na página: Lei nº 8.935/1994, Código Civil, Código de Processo Civil, Lei nº 6.015/1973, Lei nº 9.514/1997, Resolução CNJ nº 35/2007, Provimento CNJ nº 149/2023, Provimento CNJ nº 197/2025 e Normas de Serviço da Corregedoria Geral da Justiça de São Paulo, Tomo II.</div>
+          <div class="criteria-item">A lista é orientativa. A qualificação notarial considera documentos apresentados, partes envolvidas, capacidade, regime de bens, representação, tributos, conteúdo econômico, competência e particularidades do caso.</div>
+          <div class="criteria-item">Links documentais podem direcionar para portais oficiais ou serviços externos. A disponibilidade, a atualização e o funcionamento desses serviços dependem dos respectivos responsáveis.</div>
+          <div class="criteria-item">A geração do PDF usa recurso de impressão do navegador. O arquivo gerado deve ser conferido pelo usuário antes de envio, arquivamento ou compartilhamento.</div>
+        </div>
+      </section>
+    </section>
+
     <div class="grid">
       <section class="card form-card" aria-labelledby="titulo-formulario">
         <div class="card-header">
@@ -625,12 +903,55 @@
         </div>
       </section>
     </div>
+
+    <section class="support-content" aria-label="Perguntas frequentes da Triagem Notarial">
+      <section class="content-block" id="perguntas-frequentes">
+        <span class="content-kicker">FAQ</span>
+        <h2>Perguntas frequentes</h2>
+        <div class="faq-list">
+          <details>
+            <summary>A Triagem Notarial substitui a análise do tabelião?</summary>
+            <p>Não. A ferramenta organiza informações e documentos para facilitar a preparação do atendimento. A decisão sobre lavratura, exigências e forma do ato depende da qualificação notarial.</p>
+          </details>
+          <details>
+            <summary>O checklist gerado vale como lista definitiva de documentos?</summary>
+            <p>Não. O checklist é inicial. O tabelionato poderá solicitar documentos complementares conforme o ato, a situação das partes, o imóvel, a origem dos documentos e a norma aplicável.</p>
+          </details>
+          <details>
+            <summary>A ferramenta serve para atos eletrônicos pelo e-Notariado?</summary>
+            <p>Sim, quando a opção correspondente for marcada. Ainda assim, a competência territorial, a forma de assinatura, a videoconferência e os requisitos técnicos devem ser confirmados no caso concreto.</p>
+          </details>
+          <details>
+            <summary>As observações em vermelho e roxo significam impedimento?</summary>
+            <p>Não necessariamente. Elas indicam cautelas, exigências locais ou diferenças operacionais relevantes. A consequência prática depende da análise do ato e da norma vigente.</p>
+          </details>
+          <details>
+            <summary>O Portal armazena os dados digitados?</summary>
+            <p>Esta página funciona no navegador e gera o checklist a partir das opções preenchidas pelo usuário. Evite inserir dados sensíveis ou documentos completos no campo de observações.</p>
+          </details>
+          <details>
+            <summary>Como comunicar erro, atualização ou sugestão?</summary>
+            <p>Use a página de contato do Portal Notarial. Indique o tipo de ato, a opção selecionada e o item que precisa de revisão.</p>
+          </details>
+        </div>
+      </section>
+    </section>
+
   </main>
 
   <footer class="footer">
     <div class="footer-card">
       <p><strong>Aviso:</strong> ferramenta orientativa destinada ao uso geral. A lista gerada não substitui a qualificação notarial, a exigência de documentos complementares pelo tabelionato competente, a conferência dos documentos originais, a legislação local aplicável, a tabela de emolumentos ou a orientação jurídica do caso concreto.</p>
       <p>Fontes normativas de referência: Lei nº 8.935/1994, Código Civil, Código de Processo Civil, Lei nº 6.015/1973, Lei nº 9.514/1997, Resolução CNJ nº 35/2007, com alterações da Resolução CNJ nº 571/2024, Provimento CNJ nº 149/2023, Provimento CNJ nº 197/2025 e Normas de Serviço da Corregedoria Geral da Justiça de São Paulo, Tomo II.</p>
+      <nav class="institutional-links" aria-label="Links institucionais do Portal Notarial">
+        <a href="https://portalnotarial.com.br/">Página inicial</a>
+        <a href="https://portalnotarial.com.br/sobre.html">Sobre</a>
+        <a href="https://portalnotarial.com.br/contato.html">Contato</a>
+        <a href="https://portalnotarial.com.br/politica-de-privacidade.html">Privacidade</a>
+        <a href="https://portalnotarial.com.br/termos-de-uso.html">Termos de uso</a>
+        <a href="https://portalnotarial.com.br/aviso-legal.html">Aviso legal</a>
+        <a href="https://portalnotarial.com.br/fontes-normativas.html">Fontes normativas</a>
+      </nav>
     </div>
     <p class="project-support">Projeto apoiado por Escritura Pública - <a href="https://escriturapublica.substack.com" rel="noopener noreferrer" target="_blank">https://escriturapublica.substack.com</a> | Atesta - <a href="https://www.atesta.com.br" rel="noopener noreferrer" target="_blank">https://www.atesta.com.br</a></p>
   </footer>
