@@ -720,6 +720,52 @@
       .result { display: block !important; padding: 0; }
       .copybox { border: 0; background: #ffffff; padding: 0; }
     }
+
+
+    body.print-checklist-only {
+      background: #ffffff;
+    }
+
+    @media print {
+      body.print-checklist-only * {
+        visibility: hidden !important;
+      }
+
+      body.print-checklist-only #resultado,
+      body.print-checklist-only #resultado * {
+        visibility: visible !important;
+      }
+
+      body.print-checklist-only #resultado {
+        display: block !important;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        padding: 0;
+        background: #ffffff;
+      }
+
+      body.print-checklist-only #resultadoCard {
+        display: block !important;
+        position: static;
+        box-shadow: none;
+        border: 0;
+        background: #ffffff;
+      }
+
+      body.print-checklist-only .result-title {
+        border-bottom: 1px solid #d1d5db;
+        margin-bottom: 14px;
+        padding-bottom: 12px;
+      }
+
+      body.print-checklist-only .section {
+        break-inside: avoid;
+        page-break-inside: avoid;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -963,5 +1009,72 @@
   <div class="toast" id="toast">Texto copiado.</div>
 
   <script src="./app.js" defer></script>
+
+  <script>
+    (function () {
+      function mostrarAvisoTriagem(mensagem) {
+        const toast = document.getElementById('toast');
+        if (!toast) {
+          alert(mensagem);
+          return;
+        }
+        toast.textContent = mensagem;
+        toast.classList.add('show');
+        window.setTimeout(function () {
+          toast.classList.remove('show');
+        }, 2100);
+      }
+
+      function irParaTipoDeAto() {
+        const tipoAto = document.getElementById('ato');
+        if (!tipoAto) return;
+        tipoAto.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        window.setTimeout(function () {
+          tipoAto.focus({ preventScroll: true });
+        }, 280);
+      }
+
+      function gerarPdfSomenteChecklist(event) {
+        const resultado = document.getElementById('resultado');
+        const textoCopiavel = document.getElementById('textoCopiavel');
+        const existeChecklist = resultado && resultado.classList.contains('active') && textoCopiavel && textoCopiavel.textContent.trim();
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        if (!existeChecklist) {
+          mostrarAvisoTriagem('Gere o checklist antes de gerar o PDF.');
+          return;
+        }
+
+        document.body.classList.add('print-checklist-only');
+
+        const removerModoImpressao = function () {
+          document.body.classList.remove('print-checklist-only');
+          window.removeEventListener('afterprint', removerModoImpressao);
+        };
+
+        window.addEventListener('afterprint', removerModoImpressao);
+        window.print();
+        window.setTimeout(removerModoImpressao, 1200);
+      }
+
+      window.addEventListener('DOMContentLoaded', function () {
+        const limparBtn = document.getElementById('limparBtn');
+        const pdfBtn = document.getElementById('pdfBtn');
+
+        if (limparBtn) {
+          limparBtn.addEventListener('click', function () {
+            window.setTimeout(irParaTipoDeAto, 120);
+            window.setTimeout(irParaTipoDeAto, 420);
+          });
+        }
+
+        if (pdfBtn) {
+          pdfBtn.addEventListener('click', gerarPdfSomenteChecklist, true);
+        }
+      });
+    })();
+  </script>
 </body>
 </html>
